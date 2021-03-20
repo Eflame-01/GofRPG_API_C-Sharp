@@ -2,7 +2,7 @@ using System;
 
 namespace GofRPG_API
 {
-    public class BaseStats
+    public class BaseStat
     {
         //Data Members
         int fullAtk;
@@ -17,7 +17,7 @@ namespace GofRPG_API
         int hp;
 
         //Counstructors
-        public BaseStats(int attack, int defense, int evasion, int speed, int hitPoints)
+        public BaseStat(int attack, int defense, int evasion, int speed, int hitPoints)
         {
             this.fullAtk = attack;
             this.fullDef = defense;
@@ -31,7 +31,7 @@ namespace GofRPG_API
             this.hp = fullHP;
         }
 
-        public BaseStats(){
+        public BaseStat(){
         }
 
         //Methods
