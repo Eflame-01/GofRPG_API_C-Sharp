@@ -34,6 +34,10 @@ namespace GofRPG_API
         }
         public override void PerformMove(Character user, Character target)
         {
+            if(user == null || target == null)
+            {
+                return;
+            }
             int damage = CalculateDamage(user, target);
             HitTarget(damage, target);
         }

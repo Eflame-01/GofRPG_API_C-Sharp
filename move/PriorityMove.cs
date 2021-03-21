@@ -9,6 +9,10 @@ namespace GofRPG_API
         public double OriginalFlinchProbability {get; set;}
         public override void PerformMove(Character user, Character target)
         {
+            if(user == null || target == null)
+            {
+                return;
+            }
             int damage = CalculateDamage(user, target);
             HitTarget(damage, target);
             if(TargetFlinched())

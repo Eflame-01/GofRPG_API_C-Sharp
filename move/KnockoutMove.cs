@@ -29,6 +29,10 @@ namespace GofRPG_API
         }
         public override void PerformMove(Character user, Character target)
         {
+            if(user == null || target == null)
+            {
+                return;
+            }
             target.CharacterBaseStat.Hp = 0;
         }
     }
