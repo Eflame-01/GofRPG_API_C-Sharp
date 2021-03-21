@@ -3,12 +3,7 @@ using System;
 namespace GofRPG_API
 {
     public class Player : Character
-    {
-        private static Player InstanceOfPlayer
-        {
-            get; set;
-        }
-        
+    {   
         private Player()
         {
             CharacterName = "Player1";
@@ -23,7 +18,7 @@ namespace GofRPG_API
             SetCharacterType("PLAYER");
             SetCharacterID(1);
         }
-
+        private static Player InstanceOfPlayer{get; set;}
         public int CharacterCurrentXP{get; set;}
         public int CharacterLimitXP{get; set;}
         public Bag PlayerBag{get; set;}
@@ -35,7 +30,6 @@ namespace GofRPG_API
         {
             _characterType = "PLAYER";
         }
-
         public static Player GetInstance()
         {
             if(InstanceOfPlayer == null){
