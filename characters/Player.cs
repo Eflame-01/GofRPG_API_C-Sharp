@@ -4,8 +4,12 @@ namespace GofRPG_API
 {
     public class Player : Character
     {
+        private static Player InstanceOfPlayer
+        {
+            get; set;
+        }
         
-        public Player()
+        private Player()
         {
             CharacterName = "Player1";
             CharacterSex = "MALEFE";
@@ -30,6 +34,15 @@ namespace GofRPG_API
         public override void SetCharacterType(string type)
         {
             _characterType = "PLAYER";
+        }
+
+        public static Player GetInstance()
+        {
+            if(InstanceOfPlayer == null){
+                InstanceOfPlayer = new Player();
+            }
+
+            return InstanceOfPlayer;
         }
     }
 }
