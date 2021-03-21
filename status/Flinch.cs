@@ -4,8 +4,13 @@ namespace GofRPG_API
 {
     public class Flinch : StatusCondition
     {
-        //Data Member
-        public String name = "FLINCH";
+        public String StatusName
+        {
+            get
+            {
+                return "FLINCH";
+            }
+        }
 
         //Constructor
         public Flinch()
@@ -15,18 +20,25 @@ namespace GofRPG_API
 
         public String getStatusConditionName()
         {
-            return name;
+            return StatusName;
         }
 
-        public void implementStatusCondition()
+        public void implementStatusCondition(Character character)
         {
             //TODO: set the turn status to cannot move, then remove the status condition
+            if(character.CharacterBattleStatus.StatusCondition.Equals(this))
+            {
+                character.CharacterBattleStatus.TurnStatus = TurnStatus.CANNOT_MOVE;
+            }
+            removeStatusCondition(character);
         }
 
-        public void removeStatusCondition()
+        public void removeStatusCondition(Character character)
         {
-            //TODO: remove the status condition from the character
+            if(character.CharacterBattleStatus.StatusCondition.Equals(this))
+            {
+                character.CharacterBattleStatus.StatusCondition = null;
+            }
         }
-
     }
 }

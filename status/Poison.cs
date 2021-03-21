@@ -4,36 +4,58 @@ namespace GofRPG_API
 {
     public class Poison : StatusCondition
     {
-        //Data Members
-        private String name = "POISON";
-        private double poisonDamage;
-        private double poisonIncrementer;
+        public String StatusName
+        {
+            get
+            {
+                return "POISON";
+            }
+        }
+        public double PoisonDamage {get; set;}
+        public double PoisonIncrementer {get; set;}
 
         //Constructors
         public Poison(double damage, double incrementer)
         {
-            poisonDamage = setPoisonDamage(damage);
-            poisonIncrementer = setPoisonIncrementer(incrementer);
+            PoisonDamage = setPoisonDamage(damage);
+            PoisonIncrementer = setPoisonIncrementer(incrementer);
         }
         public Poison()
         {
-            poisonDamage = 0.05;
-            poisonIncrementer = 1.0;
+            PoisonDamage = 0.05;
+            PoisonIncrementer = 1.0;
         }
 
         //Override Methods
         public String getStatusConditionName()
         {
-            return name;
+            return StatusName;
         }
-        public void implementStatusCondition()
+        public void implementStatusCondition(Character character)
         {
-            //TODO: decrement the character's health by the poison damage
-            //TODO: increase the poison damage by the poison incrementer
+            if(character.CharacterBattleStatus.StatusCondition != this)
+            {
+                return;
+            }
+
+            int hp = character.CharacterBaseStat.Hp;
+            hp -= (int)(hp * PoisonDamage);
+            character.CharacterBaseStat.Hp = hp;
+
+            if(PoisonDamage < 0.25)
+            {
+                PoisonDamage += PoisonDamage * PoisonIncrementer;
+                if(PoisonDamage > 0.25)
+                {
+                    PoisonDamage = 0.25;
+                }
+            }
         }
-        public void removeStatusCondition()
+        public void removeStatusCondition(Character character)
         {
-            //TODO: remvoe this status condition from the character
+            if(character.CharacterBattleStatus.StatusCondition.Equals(this)){
+                character.CharacterBattleStatus.StatusCondition = null;
+            }
         }
 
         //Private Methods

@@ -4,34 +4,47 @@ namespace GofRPG_API
 {
     public class Burn : StatusCondition
     {
-        //Data Members
-        private String name = "BURN";
-        private double burnDamage;
+        public String StatusName 
+        {
+            get
+            {
+                return "BURN";
+            }
+        }
+        public double BurnDamage {get; set;}
 
         //Constructors
         public Burn(double damage)
         {
-            burnDamage = setBurnDamage(damage);
+            BurnDamage = setBurnDamage(damage);
         }
         public Burn()
         {
-            burnDamage = 0.05;
+            BurnDamage = 0.05;
         }
 
         //Override Methods
         public String getStatusConditionName()
         {
-            return name;
+            return StatusName;
         }
 
-        public void implementStatusCondition()
+        public void implementStatusCondition(Character character)
         {
-            //TODO: decrement the hp based on the burn damage
+            if(character.CharacterBattleStatus.StatusCondition.Equals(this))
+            {
+                int hp = character.CharacterBaseStat.Hp;
+                hp -= (int)(hp * BurnDamage);
+                character.CharacterBaseStat.Hp = hp;
+            }
         }
 
-        public void removeStatusCondition()
+        public void removeStatusCondition(Character character)
         {
-            //TODO: remove this status condition from the character
+            if(character.CharacterBattleStatus.StatusCondition.Equals(this))
+            {
+                character.CharacterBattleStatus.StatusCondition = null;
+            }
         }
 
         //Private Methods

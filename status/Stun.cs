@@ -4,35 +4,55 @@ namespace GofRPG_API
 {
     public class Stun : StatusCondition
     {
-        //Data Members
-        public String name = "STUN";
-        private int stunDuration;
-        private double stunProbability;
+        public String StatusName
+        {
+            get
+            {
+                return "STUN";
+            }
+        }
+        public int StunDuration {get; set;}
+        public double StunProbability {get; set;}
 
         //Constructors
         public Stun(int duration, double probability)
         {
-            stunDuration = setStunDuration(duration);
-            stunProbability = setStunProbability(probability);
+            StunDuration = setStunDuration(duration);
+            StunProbability = setStunProbability(probability);
         }
         public Stun()
         {
-            stunDuration = 3;
-            stunProbability = 0.25;
+            StunDuration = 3;
+            StunProbability = 0.25;
         }
 
         //Override Methods
         public String getStatusConditionName()
         {
-            return name;
+            return StatusName;
         }
-        public void implementStatusCondition()
+        public void implementStatusCondition(Character character)
         {
-            //TODO: check to see if you should prevent the player from moving using the stun duration and stun probability variables
+            if(character.CharacterBattleStatus.StatusCondition.Equals(this) || StunDuration > 0)
+            {
+                Random rand = new Random();
+                if(rand.NextDouble() <= StunProbability)
+                {
+                    character.CharacterBattleStatus.TurnStatus = TurnStatus.CANNOT_MOVE;
+                }
+                StunDuration -= 1;
+                if(StunDuration <= 0)
+                {
+                    removeStatusCondition(character);
+                }
+            }
         }
-        public void removeStatusCondition()
+        public void removeStatusCondition(Character character)
         {
-            //TODO: remove this status condition from the character
+            if(character.CharacterBattleStatus.StatusCondition.Equals(this))
+            {
+                character.CharacterBattleStatus.StatusCondition = null;
+            }
         }
 
         //Private Methods

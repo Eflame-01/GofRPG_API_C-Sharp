@@ -4,9 +4,8 @@ namespace GofRPG_API
 {
     public interface StatusCondition
     {
-        //Methods to be overridden 
         public String getStatusConditionName();
-        public void implementStatusCondition();
-        public void removeStatusCondition();
+        public void implementStatusCondition(Character character);
+        public void removeStatusCondition(Character character);
     }
 }
