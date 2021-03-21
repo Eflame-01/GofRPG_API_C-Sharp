@@ -10,6 +10,9 @@ namespace GofRPG_API
         public void resetMove();
         bool didMoveMiss(double accuracy, Character target)
         {
+            //P(Accuracy Failed) OR P(Target Evaded)
+            double accuracyFailed = 1 - accuracy;
+
             return false;
         }
 
