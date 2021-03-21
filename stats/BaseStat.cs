@@ -33,13 +33,13 @@ namespace GofRPG_API
         }
 
         //Methods
-        public int getBaseStatTotal()
+        public int GetBaseStatTotal()
         {
             int total = Atk + Def + Hp + Spd + Eva;
             return total;
         }
 
-        public void resetBaseStat(){
+        public void ResetBaseStat(){
             Atk = FullAtk;
             Def = FullDef;
             Eva = FullEva;
