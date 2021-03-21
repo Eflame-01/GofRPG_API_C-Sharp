@@ -29,12 +29,15 @@ namespace GofRPG_API
         public void addItemToBag(Item item, int amount)
         {
             int currentAmount = 1;
-            if(ItemList.ContainsKey(item)){
+            if(ItemList.ContainsKey(item))
+            {
                 currentAmount += ItemList[item];
                 ItemList[item] = currentAmount;
             }
-            else{
-                if(item == null){
+            else
+            {
+                if(item == null)
+                {
                     return;
                 }
                 ItemList.Add(item, currentAmount);
@@ -45,16 +48,19 @@ namespace GofRPG_API
 
         public void discardItemFromBag(Item item, int amount)
         {
-            if(!ItemList.ContainsKey(item)){
+            if(!ItemList.ContainsKey(item))
+            {
                 return;
             }
 
             int currentAmount = ItemList[item];
-            if(amount > currentAmount){
+            if(amount > currentAmount)
+            {
                 ItemList.Remove(item);
                 TotalItemAmount -= currentAmount;
             }
-            else{
+            else
+            {
                 ItemList[item] = currentAmount - amount;
                 TotalItemAmount -= amount;
             }
