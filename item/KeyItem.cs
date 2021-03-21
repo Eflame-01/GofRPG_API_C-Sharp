@@ -6,10 +6,10 @@ namespace GofRPG_API
     {
         public KeyItem(String name, String description, int level)
         {
-            itemName = name;
-            itemDescription = description;
-            itemID = "KEY";
-            itemLevel = level;
+            ItemName = name;
+            ItemDescription = description;
+            ItemID = "KEY";
+            ItemLevel = level;
         }
     }
 }

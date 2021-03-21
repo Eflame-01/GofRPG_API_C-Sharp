@@ -4,17 +4,17 @@ namespace GofRPG_API
 {
     public abstract class Item
     {
-        protected String itemName;
-        protected String itemDescription;
-        protected String itemID;
-        protected int itemLevel;
+        public String ItemName {get; protected set;}
+        public String ItemDescription {get; protected set;}
+        public String ItemID {get; protected set;}
+        public int ItemLevel {get; protected set;}
 
         //TODO: pass in Character parameter
-        public virtual void useItem()
+        public virtual void UseItem()
         {
             //do nothing
         }
-        public virtual void stopItemUse()
+        public virtual void StopItemUse()
         {
             //do nothing
         }
