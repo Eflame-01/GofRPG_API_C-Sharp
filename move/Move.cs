@@ -2,12 +2,12 @@ using System;
 
 namespace GofRPG_API
 {
-    public interface Move
+    public abstract class Move
     {
-        public void performMove(Character user, Character target);
-        public void performSideEffect(Character target);
-        public bool isPrimaryMove();
-        public void resetMove();
+        public abstract void performMove(Character user, Character target);
+        public abstract void performSideEffect(Character target);
+        public abstract bool isPrimaryMove();
+        public abstract void resetMove();
         bool didMoveMiss(double accuracy, Character target)
         {
             //P(Accuracy Failed) OR P(Target Evaded)
