@@ -4,31 +4,29 @@ namespace GofRPG_API
 {
     public class BaseStat
     {
-        //Data Members
-        int fullAtk;
-        int fullDef;
-        int fullEva;
-        int fullSpd;
-        int fullHP;
-        int atk;
-        int def;
-        int eva;
-        int spd;
-        int hp;
+        public int FullAtk {get; set;}
+        public int FullDef {get; set;}
+        public int FullEva {get; set;}
+        public int FullHp {get; set;}
+        public int FullSpd {get; set;}
+        public int Atk {get; set;}
+        public int Def {get; set;}
+        public int Eva {get; set;}
+        public int Hp {get; set;}
+        public int Spd {get; set;}
 
         //Counstructors
         public BaseStat(int attack, int defense, int evasion, int speed, int hitPoints)
         {
-            this.fullAtk = attack;
-            this.fullDef = defense;
-            this.fullEva = evasion;
-            this.fullSpd = speed;
-            this.fullHP = hitPoints;
-            this.atk = fullAtk;
-            this.def = fullDef;
-            this.eva = fullEva;
-            this.spd = fullSpd;
-            this.hp = fullHP;
+            FullAtk = attack;
+            FullDef = defense;
+            FullEva = evasion;
+            FullSpd = speed;
+            FullHp = hitPoints;
+            Atk = attack;
+            Def = defense;
+            Eva = evasion;
+            Hp = hitPoints;
         }
 
         public BaseStat(){
@@ -37,15 +35,15 @@ namespace GofRPG_API
         //Methods
         public int getBaseStatTotal()
         {
-            int total = atk + def + hp + spd + eva;
+            int total = Atk + Def + Hp + Spd + Eva;
             return total;
         }
 
         public void resetBaseStat(){
-            this.atk = fullAtk;
-            this.def = fullDef;
-            this.eva = fullEva;
-            this.spd = fullSpd;
+            Atk = FullAtk;
+            Def = FullDef;
+            Eva = FullEva;
+            Spd = FullSpd;
         }
     }
 }

@@ -6,25 +6,25 @@ namespace GofRPG_API
     {
         public Defense(double boost, double reduction)
         {
-            name = "DEFENSE";
-            boostPercent = boost;
-            reductionPercent = reduction;
+            StatName = "DEFENSE";
+            BoostPercent = boost;
+            ReductionPercent = reduction;
 
         }
 
         public Defense()
         {
-            name = "DEFENSE";
-            boostPercent = 0.05;
-            reductionPercent = 0.05;
+            StatName = "DEFENSE";
+            BoostPercent = 0.05;
+            ReductionPercent = 0.05;
         }
         
-       public override void boostStat()
+       public override void boostStat(Character character)
        {
            //TODO: boost defense base stat of the character
        }
 
-        public override void reduceStat()
+        public override void reduceStat(Character character)
         {
             //TODO: reduce defense base stat of the character
         }

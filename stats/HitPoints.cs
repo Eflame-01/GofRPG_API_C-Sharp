@@ -6,25 +6,25 @@ namespace GofRPG_API
     {
         public HitPoints(double boost, double reduction)
         {
-            name = "HIT POINTS";
-            boostPercent = boost;
-            reductionPercent = reduction;
+            StatName = "HIT POINTS";
+            BoostPercent = boost;
+            ReductionPercent = reduction;
 
         }
 
         public HitPoints()
         {
-            name = "HIT POINTS";
-            boostPercent = 0.05;
-            reductionPercent = 0.05;
+            StatName = "HIT POINTS";
+            BoostPercent = 0.05;
+            ReductionPercent = 0.05;
         }
         
-       public override void boostStat()
+       public override void boostStat(Character character)
        {
            //TODO: boost speed base stat of the character
        }
 
-        public override void reduceStat()
+        public override void reduceStat(Character character)
         {
             //TODO: reduce speed base stat of the character
         }

@@ -6,25 +6,25 @@ namespace GofRPG_API
     {
         public Evasion(double boost, double reduction)
         {
-            name = "EVASION";
-            boostPercent = boost;
-            reductionPercent = reduction;
+            StatName = "EVASION";
+            BoostPercent = boost;
+            ReductionPercent = reduction;
 
         }
 
         public Evasion()
         {
-            name = "EVASION";
-            boostPercent = 0.05;
-            reductionPercent = 0.05;
+            StatName = "EVASION";
+            BoostPercent = 0.05;
+            ReductionPercent = 0.05;
         }
         
-       public override void boostStat()
+       public override void boostStat(Character character)
        {
            //TODO: boost evasion base stat of the character
        }
 
-        public override void reduceStat()
+        public override void reduceStat(Character character)
         {
             //TODO: reduce evasion base stat of the character
         }
