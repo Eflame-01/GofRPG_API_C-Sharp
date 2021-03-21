@@ -4,49 +4,59 @@ namespace GofRPG_API
 {
     public class Bag
     {
-        public Dictionary<Item, int> itemList = new Dictionary<Item, int>();
-        private int totalItemAmount = 0;
+        private Dictionary<Item, int> _itemList = new Dictionary<Item, int>();
+        private int _totalItemAmount = 0;
 
-        public Dictionary<Item, int> getItemList()
+        public Dictionary<Item, int> ItemList 
         {
-            return itemList;
+            get
+            {
+                return _itemList;
+            }
         }
-        public int getTotalItemAmount()
+        public int TotalItemAmount
         {
-            return totalItemAmount;
+            get
+            {
+                return _totalItemAmount;
+            }
+            set
+            {
+                _totalItemAmount = value;
+            }
         }
 
         public void addItemToBag(Item item, int amount)
         {
             int currentAmount = 1;
-            if(itemList.ContainsKey(item)){
-                currentAmount += itemList[item];
-                itemList[item] = currentAmount;
+            if(ItemList.ContainsKey(item)){
+                currentAmount += ItemList[item];
+                ItemList[item] = currentAmount;
             }
             else{
                 if(item == null){
                     return;
                 }
-                itemList.Add(item, currentAmount);
+                ItemList.Add(item, currentAmount);
             }
 
-            totalItemAmount += amount;
+            TotalItemAmount += amount;
         }
 
         public void discardItemFromBag(Item item, int amount)
         {
-            if(!itemList.ContainsKey(item)){
+            if(!ItemList.ContainsKey(item)){
                 return;
             }
 
-            int currentAmount = itemList[item];
+            int currentAmount = ItemList[item];
             if(amount > currentAmount){
-                itemList.Remove(item);
-                totalItemAmount -= currentAmount;
+                ItemList.Remove(item);
+                TotalItemAmount -= currentAmount;
             }
             else{
-                itemList[item] = currentAmount - amount;
-                totalItemAmount -= amount;
+                ItemList[item] = currentAmount - amount;
+                TotalItemAmount -= amount;
             }
         }
 
