@@ -20,12 +20,28 @@ namespace GofRPG_API
         
        public override void boostStat(Character character)
        {
-           //TODO: boost attack base stat of the character
+           int boostVal = (int) (character.CharacterBaseStat.Atk * BoostPercent);
+           if(boostVal > 0)
+           {
+               character.CharacterBaseStat.Atk += boostVal;
+           }
+           else
+           {
+               character.CharacterBaseStat.Atk += 1;
+           }
        }
 
         public override void reduceStat(Character character)
         {
-            //TODO: reduce attack base stat of the character
+            int boostVal = (int) (character.CharacterBaseStat.Atk * BoostPercent);
+            if(boostVal > 0)
+            {
+                character.CharacterBaseStat.Atk -= boostVal;
+            }
+            else
+            {
+               character.CharacterBaseStat.Atk -= 1;
+            }
         }
     }
 }

@@ -21,12 +21,28 @@ namespace GofRPG_API
         
        public override void boostStat(Character character)
        {
-           //TODO: boost speed base stat of the character
+            int boostVal = (int) (character.CharacterBaseStat.Hp * BoostPercent);
+            if(boostVal > 0)
+            {
+               character.CharacterBaseStat.Hp += boostVal;
+            }
+            else
+            {
+               character.CharacterBaseStat.Hp += 1;
+            }
        }
 
         public override void reduceStat(Character character)
         {
-            //TODO: reduce speed base stat of the character
+            int boostVal = (int) (character.CharacterBaseStat.Hp * BoostPercent);
+            if(boostVal > 0)
+            {
+               character.CharacterBaseStat.Hp -= boostVal;
+            }
+            else
+            {
+               character.CharacterBaseStat.Hp -= 1;
+            }
         }
     }
 }

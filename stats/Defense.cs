@@ -21,12 +21,28 @@ namespace GofRPG_API
         
        public override void boostStat(Character character)
        {
-           //TODO: boost defense base stat of the character
+            int boostVal = (int) (character.CharacterBaseStat.Def * BoostPercent);
+            if(boostVal > 0)
+            {
+               character.CharacterBaseStat.Def += boostVal;
+            }
+            else
+            {
+               character.CharacterBaseStat.Def += 1;
+            }
        }
 
         public override void reduceStat(Character character)
         {
-            //TODO: reduce defense base stat of the character
+            int boostVal = (int) (character.CharacterBaseStat.Def * BoostPercent);
+            if(boostVal > 0)
+            {
+               character.CharacterBaseStat.Def -= boostVal;
+            }
+            else
+            {
+               character.CharacterBaseStat.Def -= 1;
+            }
         }
     }
 }

@@ -21,12 +21,28 @@ namespace GofRPG_API
         
        public override void boostStat(Character character)
        {
-           //TODO: boost evasion base stat of the character
+            int boostVal = (int) (character.CharacterBaseStat.Eva * BoostPercent);
+            if(boostVal > 0)
+            {
+               character.CharacterBaseStat.Eva += boostVal;
+            }
+            else
+            {
+               character.CharacterBaseStat.Eva += 1;
+            }
        }
 
         public override void reduceStat(Character character)
         {
-            //TODO: reduce evasion base stat of the character
+            int boostVal = (int) (character.CharacterBaseStat.Eva * BoostPercent);
+            if(boostVal > 0)
+            {
+               character.CharacterBaseStat.Eva -= boostVal;
+            }
+            else
+            {
+               character.CharacterBaseStat.Eva -= 1;
+            }
         }
     }
 }

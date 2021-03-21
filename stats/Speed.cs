@@ -19,14 +19,30 @@ namespace GofRPG_API
             ReductionPercent = 0.05;
         }
         
-       public override void boostStat(Character character)
-       {
-           //TODO: boost speed base stat of the character
-       }
+        public override void boostStat(Character character)
+        {
+            int boostVal = (int) (character.CharacterBaseStat.Spd * BoostPercent);
+            if(boostVal > 0)
+            {
+               character.CharacterBaseStat.Spd += boostVal;
+            }
+            else
+            {
+               character.CharacterBaseStat.Spd += 1;
+            }
+        }
 
         public override void reduceStat(Character character)
         {
-            //TODO: reduce speed base stat of the character
+            int boostVal = (int) (character.CharacterBaseStat.Spd * BoostPercent);
+            if(boostVal > 0)
+            {
+               character.CharacterBaseStat.Spd -= boostVal;
+            }
+            else
+            {
+               character.CharacterBaseStat.Spd -= 1;
+            }
         }
     }
 }
