@@ -17,8 +17,8 @@ namespace GofRPG_API
         //Constructors
         public Poison(double damage, double incrementer)
         {
-            PoisonDamage = setPoisonDamage(damage);
-            PoisonIncrementer = setPoisonIncrementer(incrementer);
+            PoisonDamage = SetPoisonDamage(damage);
+            PoisonIncrementer = SetPoisonIncrementer(incrementer);
         }
         public Poison()
         {
@@ -27,11 +27,11 @@ namespace GofRPG_API
         }
 
         //Override Methods
-        public String getStatusConditionName()
+        public String GetStatusConditionName()
         {
             return StatusName;
         }
-        public void implementStatusCondition(Character character)
+        public void ImplementStatusCondition(Character character)
         {
             if(character.CharacterBattleStatus.StatusCondition != this)
             {
@@ -51,7 +51,7 @@ namespace GofRPG_API
                 }
             }
         }
-        public void removeStatusCondition(Character character)
+        public void RemoveStatusCondition(Character character)
         {
             if(character.CharacterBattleStatus.StatusCondition.Equals(this)){
                 character.CharacterBattleStatus.StatusCondition = null;
@@ -59,7 +59,7 @@ namespace GofRPG_API
         }
 
         //Private Methods
-        private double setPoisonDamage(double damage)
+        private double SetPoisonDamage(double damage)
         {
             if(damage < 0.05){
                 damage = 0.05;
@@ -69,7 +69,7 @@ namespace GofRPG_API
             }
             return damage;
         }
-        private double setPoisonIncrementer(double incrementer)
+        private double SetPoisonIncrementer(double incrementer)
         {
             if(incrementer < 1.0){
                 incrementer = 1.0;

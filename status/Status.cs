@@ -4,8 +4,8 @@ namespace GofRPG_API
 {
     public interface StatusCondition
     {
-        public String getStatusConditionName();
-        public void implementStatusCondition(Character character);
-        public void removeStatusCondition(Character character);
+        String GetStatusConditionName();
+        void ImplementStatusCondition(Character character);
+        void RemoveStatusCondition(Character character);
     }
 }

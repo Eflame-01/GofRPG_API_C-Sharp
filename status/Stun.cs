@@ -17,8 +17,8 @@ namespace GofRPG_API
         //Constructors
         public Stun(int duration, double probability)
         {
-            StunDuration = setStunDuration(duration);
-            StunProbability = setStunProbability(probability);
+            StunDuration = SetStunDuration(duration);
+            StunProbability = SetStunProbability(probability);
         }
         public Stun()
         {
@@ -27,11 +27,11 @@ namespace GofRPG_API
         }
 
         //Override Methods
-        public String getStatusConditionName()
+        public String GetStatusConditionName()
         {
             return StatusName;
         }
-        public void implementStatusCondition(Character character)
+        public void ImplementStatusCondition(Character character)
         {
             if(character.CharacterBattleStatus.StatusCondition.Equals(this) || StunDuration > 0)
             {
@@ -43,11 +43,11 @@ namespace GofRPG_API
                 StunDuration -= 1;
                 if(StunDuration <= 0)
                 {
-                    removeStatusCondition(character);
+                    RemoveStatusCondition(character);
                 }
             }
         }
-        public void removeStatusCondition(Character character)
+        public void RemoveStatusCondition(Character character)
         {
             if(character.CharacterBattleStatus.StatusCondition.Equals(this))
             {
@@ -56,7 +56,7 @@ namespace GofRPG_API
         }
 
         //Private Methods
-        private int setStunDuration(int duration)
+        private int SetStunDuration(int duration)
         {
             if(duration < 3){
                 duration = 3;
@@ -66,7 +66,7 @@ namespace GofRPG_API
             }
             return duration;
         }
-        private double setStunProbability(double probability)
+        private double SetStunProbability(double probability)
         {
             if(probability < 0.25){
                 probability = 0.25;

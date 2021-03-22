@@ -54,12 +54,12 @@ namespace GofRPG_API
             //boost stat of player
             player.CharacterArchetype.LevelUpPlayerStats();
             //check if the player can learn new move, get the moves, and add it to the list in the player's move set
-            List<Move> list = new MoveDriver().GetMoves();
-            foreach(Move move in list)
-            {
-                player.CharacterMoveSet.AddMoveToBattleSlot(move);
-                player.CharacterMoveSet.AddMoveToList(move);
-            }
+            // List<Move> list = new MoveDriver().GetMoves();
+            // foreach(Move move in list)
+            // {
+            //     player.CharacterMoveSet.AddMoveToBattleSlot(move);
+            //     player.CharacterMoveSet.AddMoveToList(move);
+            // }
         }
 
         public static Level GetInstance()

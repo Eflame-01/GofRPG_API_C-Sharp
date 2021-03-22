@@ -65,7 +65,7 @@ namespace GofRPG_API
         {
             StatusCondition characterStatusCondition = character.CharacterBattleStatus.StatusCondition;
 
-            if(characterStatusCondition == null || !characterStatusCondition.getStatusConditionName().Equals(StatusCure))
+            if(characterStatusCondition == null || !characterStatusCondition.GetStatusConditionName().Equals(StatusCure))
             {
                 return;
             }

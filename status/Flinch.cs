@@ -18,22 +18,22 @@ namespace GofRPG_API
 
         }
 
-        public String getStatusConditionName()
+        public String GetStatusConditionName()
         {
             return StatusName;
         }
 
-        public void implementStatusCondition(Character character)
+        public void ImplementStatusCondition(Character character)
         {
             //TODO: set the turn status to cannot move, then remove the status condition
             if(character.CharacterBattleStatus.StatusCondition.Equals(this))
             {
                 character.CharacterBattleStatus.TurnStatus = TurnStatus.CANNOT_MOVE;
             }
-            removeStatusCondition(character);
+            RemoveStatusCondition(character);
         }
 
-        public void removeStatusCondition(Character character)
+        public void RemoveStatusCondition(Character character)
         {
             if(character.CharacterBattleStatus.StatusCondition.Equals(this))
             {

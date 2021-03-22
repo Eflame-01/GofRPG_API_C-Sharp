@@ -1749,13 +1749,12 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\esero\\OneDrive\\Documents\\GitHub\\440-Group-6-Spring-2021\\GofRPG_API\\GofRPG_API.csproj",
+      "projectUniqueName": "C:\\Users\\esero\\OneDrive\\Documents\\GitHub\\440-Group-6-Spring-2021\\GofRPG_API\\GofRPG_API.csproj",
       "projectName": "GofRPG_API",
-      "projectPath": "c:\\Users\\esero\\OneDrive\\Documents\\GitHub\\440-Group-6-Spring-2021\\GofRPG_API\\GofRPG_API.csproj",
+      "projectPath": "C:\\Users\\esero\\OneDrive\\Documents\\GitHub\\440-Group-6-Spring-2021\\GofRPG_API\\GofRPG_API.csproj",
       "packagesPath": "C:\\Users\\esero\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\esero\\OneDrive\\Documents\\GitHub\\440-Group-6-Spring-2021\\GofRPG_API\\obj\\",
+      "outputPath": "C:\\Users\\esero\\OneDrive\\Documents\\GitHub\\440-Group-6-Spring-2021\\GofRPG_API\\obj\\",
       "projectStyle": "PackageReference",
-      "crossTargeting": true,
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
