@@ -1,1 +1,0 @@
-"Server=127.0.0.1;Port=3306;Database=guardians_of_rpg;Uid=root;Pwd=Eoc13@Yellow_;"
