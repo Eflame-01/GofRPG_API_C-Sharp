@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace GofRPG_API
 {
@@ -6,6 +7,7 @@ namespace GofRPG_API
     {
         public static Level Instance {get; private set;}
         public double XpMultiplier {get; private set;}
+        
         private Level()
         {
             XpMultiplier = 3;
@@ -51,10 +53,13 @@ namespace GofRPG_API
             player.CharacterLimitXP = (int) Math.Pow(player.CharacterLevel, XpMultiplier);
             //boost stat of player
             player.CharacterArchetype.LevelUpPlayerStats();
-            //check if the player can learn new move
-            //TODO: CREATE THE MOVE DRIVER TO DO THIS   
-            //if they can, get the moves, and add it to the list in the player's move set
-            //TODO: FINISHE THE MOVE DRIVET TO DO THIS
+            //check if the player can learn new move, get the moves, and add it to the list in the player's move set
+            List<Move> list = new MoveDriver().GetMoves();
+            foreach(Move move in list)
+            {
+                player.CharacterMoveSet.AddMoveToBattleSlot(move);
+                player.CharacterMoveSet.AddMoveToList(move);
+            }
         }
 
         public static Level GetInstance()
