@@ -24,11 +24,11 @@ namespace GofRPG_API
         public Bag PlayerBag{get; set;}
         public override void SetCharacterID(int id)
         {
-            _characterID = 1;
+            CharacterID = 1;
         }
         public override void SetCharacterType(string type)
         {
-            _characterType = "PLAYER";
+            CharacterType = "PLAYER";
         }
         public static Player GetInstance()
         {

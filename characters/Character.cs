@@ -9,27 +9,16 @@ namespace GofRPG_API
         private int _characterGold;
         private int _characterLevel;
 
-        protected String _characterType;
-        //TODO: Archetype _characterArchetype;
-        private BaseStat _characterBaseStat;
-        private BattleStatus _characterBattleStatus;
-        //TODO: MoveSet _characterMoveSet;
-
-        private Item _characterItem;
-
-        protected int _characterID;
-
-        public String CharacterName
-        {
-            get
-            {
-                return _characterName;
-            }
-            set
-            {
-                _characterName = value;
-            }
-        }
+        public String CharacterName {get; set;}
+        public String CharacterType {get; protected set;}
+        public abstract void SetCharacterType(String type);
+        public BaseStat CharacterBaseStat {get; set;}
+        public BattleStatus CharacterBattleStatus {get; set;}
+        public Item CharacterItem{get; set;}
+        public int CharacterID{ get; protected set;}
+        public abstract void SetCharacterID(int id);
+        public Archetype CharacterArchetype {get; set;}
+        public MoveSet CharacterMoveSet {get; set;}
         public String CharacterSex
         {
             get
@@ -84,56 +73,5 @@ namespace GofRPG_API
                 }
             }
         }
-        public String CharacterType
-        {
-            get
-            {
-                return _characterType;
-            }
-        }
-        public abstract void SetCharacterType(String type);
-        public BaseStat CharacterBaseStat
-        {
-            get
-            {
-                return _characterBaseStat;
-            }
-            set
-            {
-                _characterBaseStat = value;
-            }
-        }
-        public BattleStatus CharacterBattleStatus
-        {
-            get
-            {
-                return _characterBattleStatus;
-            }
-            set
-            {
-                _characterBattleStatus = value;
-            }
-        }
-        public Item CharacterItem
-        {
-            get
-            {
-                return _characterItem;
-            }
-            set
-            {
-                _characterItem = value;
-            }
-        }
-        public int CharacterID
-        {
-            get
-            {
-                return _characterID;
-            }
-        }
-        public abstract void SetCharacterID(int id);
-
-        //TODO: add getters and setters for Archetype and MoveSet
     }
 }

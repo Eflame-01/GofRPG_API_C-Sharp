@@ -19,17 +19,17 @@ namespace GofRPG_API
 
         public override void SetCharacterID(int id)
         {
-            _characterID = id;
+            CharacterID = id;
         }
         public override void SetCharacterType(string type)
         {
             if(type.Equals("ALLY") || type.Equals("ENEMY") || type.Equals("STRANGER"))
             {
-                _characterType = type;
+                CharacterType = type;
             }
             else
             {
-                _characterType = "STRANGER";
+                CharacterType = "STRANGER";
             }
         }
     }
