@@ -7,18 +7,18 @@ namespace GofRPG_API
     class Files
     {   
         //Data members
-        private String fileName = "sql_connection_string.txt";
-        private Boolean isEncrypted = false;
+        private String _fileName = "sql_connection_string.txt";
+        private Boolean _isEncrypted = false;
 
         public String DecryptFile()
         {
             //Find the file, and decrypt it if it is encrypted.
-            if(isEncrypted)
+            if(_isEncrypted)
             {
                 //decrypt file
                 try
                 {
-                    File.Decrypt(fileName);
+                    File.Decrypt(_fileName);
                 }
                 catch(Exception e)
                 {
@@ -28,8 +28,8 @@ namespace GofRPG_API
             }
 
             //Gather the contents from the decrypted file.
-            String contents = System.IO.File.ReadAllText(fileName);
-            isEncrypted = false;
+            String contents = System.IO.File.ReadAllText(_fileName);
+            _isEncrypted = false;
 
             //Return the contents
             return contents;
@@ -38,12 +38,12 @@ namespace GofRPG_API
         public Boolean EncryptFile()
         {
             //Find the file, and encrypt it if it is decrypted.
-            if(!isEncrypted)
+            if(!_isEncrypted)
             {
                 //entrypt file
                 try
                 {
-                    File.Encrypt(fileName);
+                    File.Encrypt(_fileName);
                 }
                 catch(Exception e)
                 {
@@ -53,7 +53,7 @@ namespace GofRPG_API
             }
 
             //Change the value for isEncrypted
-            isEncrypted = true;
+            _isEncrypted = true;
 
             //Return true if it is sucesscully encrypted. False if not.
             return true;

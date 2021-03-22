@@ -7,13 +7,15 @@ namespace GofRPG_API
     {
         //Data members
         private Files _files = new Files();
-        protected SqlConnection SqlConnection;
-        protected String SqlQuery;
-        protected SqlCommand SqlCommand;
-        protected SqlDataReader SqlDataReader;
-
-
-        private void initDriver(){
+        protected SqlConnection SqlConnection {get; set;}
+        protected String SqlQuery {get; set;}
+        protected SqlCommand SqlCommand {get; set;}
+        protected SqlDataReader SqlDataReader {get; set;}
+        public DatabaseDriver()
+        {
+            InitDriver();
+        }
+        private void InitDriver(){
             //Decrypt file needed to gain access to the database
             String connectionString = _files.DecryptFile();
 
