@@ -19,7 +19,7 @@ namespace GofRPG_API
             ReductionPercent = 0.05;
         }
         
-       public override void boostStat(Character character)
+       public override void BoostStat(Character character)
        {
             int boostVal = (int) (character.CharacterBaseStat.Hp * BoostPercent);
             if(boostVal > 0)
@@ -32,7 +32,7 @@ namespace GofRPG_API
             }
        }
 
-        public override void reduceStat(Character character)
+        public override void ReduceStat(Character character)
         {
             int boostVal = (int) (character.CharacterBaseStat.Hp * BoostPercent);
             if(boostVal > 0)

@@ -9,8 +9,8 @@ namespace GofRPG_API
         public double ReductionPercent {get; protected set;}
 
         //Abstract Methods
-        public abstract void boostStat(Character character);
-        public abstract void reduceStat(Character character);
+        public abstract void BoostStat(Character character);
+        public abstract void ReduceStat(Character character);
 
         public static Stat GetStat(String name, double boost, double reduction)
         {

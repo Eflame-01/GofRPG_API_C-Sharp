@@ -10,11 +10,11 @@ namespace GofRPG_API
         public int ItemLevel {get; protected set;}
 
         //TODO: pass in Character parameter
-        public virtual void UseItem()
+        public virtual void UseItem(Character character)
         {
             //do nothing
         }
-        public virtual void StopItemUse()
+        public virtual void StopItemUse(Character character)
         {
             //do nothing
         }

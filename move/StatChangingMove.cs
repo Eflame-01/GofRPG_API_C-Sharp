@@ -33,10 +33,10 @@ namespace GofRPG_API
             }
             if(StatBoost != null)
             {
-                StatBoost.boostStat(target);
+                StatBoost.BoostStat(target);
             }
             if(StatReduction != null){
-                StatReduction.reduceStat(target);
+                StatReduction.ReduceStat(target);
             }
         }
 
@@ -48,10 +48,10 @@ namespace GofRPG_API
             }
             if(StatBoost != null)
             {
-                StatBoost.boostStat(target);
+                StatBoost.BoostStat(target);
             }
             if(StatReduction != null){
-                StatReduction.reduceStat(target);
+                StatReduction.ReduceStat(target);
             }
         }
     }
