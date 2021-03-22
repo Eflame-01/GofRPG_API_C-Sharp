@@ -7,7 +7,9 @@ namespace GofRPG_API
     {
         static void Main(string[] args)
         {
-            
+            Move move = new MoveDriver().GetMove("Fire Fist");
+
+            Console.WriteLine(move.MoveName);
         }
     }
 }

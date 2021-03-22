@@ -1,5 +1,5 @@
 using System;
-using Microsoft.Data.SqlClient;
+using MySql.Data.MySqlClient;
 
 namespace GofRPG_API
 {
@@ -8,13 +8,17 @@ namespace GofRPG_API
         //Data members
         private Files _files = new Files();
         protected String SqlQuery {get; set;}
-        protected String ConnectionString {get; private set;}
+        protected MySqlConnection MySqlConnection {get; private set;}
+        protected MySqlCommand MySqlCommand {get; set;}
+        protected MySqlDataReader MySqlDataReader {get; set;}
         public DatabaseDriver()
         {
             InitDriver();
         }
-        private void InitDriver(){
-            ConnectionString = @_files.DecryptFile();
+        protected void InitDriver(){
+            String connectionString = @_files.DecryptFile();
+            MySqlConnection = new MySqlConnection(connectionString);
+            MySqlConnection.Open();
         }
     }
 }
