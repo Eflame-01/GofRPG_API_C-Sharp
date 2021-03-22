@@ -12,30 +12,21 @@ namespace GofRPG_API
             CharacterLevel = 1;
             CharacterCurrentXP = 0;
             CharacterLimitXP = 1;
-            CharacterBaseStat = new BaseStat();//TODO
-            CharacterBattleStatus = new BattleStatus();//TODO
+            CharacterBaseStat = new BaseStat();
+            CharacterBattleStatus = new BattleStatus();
             CharacterItem = null;
-            SetCharacterType("PLAYER");
-            SetCharacterID(1);
+            CharacterType = "PLAYER";
+            CharacterID = 1;
         }
         private static Player InstanceOfPlayer{get; set;}
         public int CharacterCurrentXP{get; set;}
         public int CharacterLimitXP{get; set;}
         public Bag PlayerBag{get; set;}
-        public override void SetCharacterID(int id)
-        {
-            CharacterID = 1;
-        }
-        public override void SetCharacterType(string type)
-        {
-            CharacterType = "PLAYER";
-        }
         public static Player GetInstance()
         {
             if(InstanceOfPlayer == null){
                 InstanceOfPlayer = new Player();
             }
-
             return InstanceOfPlayer;
         }
     }

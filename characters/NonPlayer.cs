@@ -14,14 +14,13 @@ namespace GofRPG_API
             CharacterBattleStatus = battleStatus;
             CharacterItem = item;
             SetCharacterType(type);
-            SetCharacterID(id);
+            CharacterID = id;
         }
-
-        public override void SetCharacterID(int id)
+        public void SetCharacterID(int id)
         {
             CharacterID = id;
         }
-        public override void SetCharacterType(string type)
+        public void SetCharacterType(string type)
         {
             if(type.Equals("ALLY") || type.Equals("ENEMY") || type.Equals("STRANGER"))
             {

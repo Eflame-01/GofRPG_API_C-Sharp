@@ -36,6 +36,5 @@ namespace GofRPG_API
 
             return (rand.NextDouble() <= probabilityMoveMissed);
         }
-
     }
 }

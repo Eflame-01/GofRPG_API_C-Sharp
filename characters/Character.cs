@@ -11,12 +11,10 @@ namespace GofRPG_API
 
         public String CharacterName {get; set;}
         public String CharacterType {get; protected set;}
-        public abstract void SetCharacterType(String type);
         public BaseStat CharacterBaseStat {get; set;}
         public BattleStatus CharacterBattleStatus {get; set;}
         public Item CharacterItem{get; set;}
         public int CharacterID{ get; protected set;}
-        public abstract void SetCharacterID(int id);
         public Archetype CharacterArchetype {get; set;}
         public MoveSet CharacterMoveSet {get; set;}
         public String CharacterSex
