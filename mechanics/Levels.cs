@@ -5,18 +5,19 @@ namespace GofRPG_API
 {
     public class Level
     {
-        public static Level Instance {get; private set;}
-        public double XpMultiplier {get; private set;}
+        private double _battleXP = 1.2;
+        private double _majorQuestXP = 2;
+        private double _minorQuestXP = 1.5;
+        private double _xpMultiplier = 3;
         
         private Level()
         {
-            XpMultiplier = 3;
         }
 
         public void GainXPFromBattle(Character enemy)
         {
             Player player = Player.GetInstance();
-            player.CharacterCurrentXP += (int) Math.Pow(enemy.CharacterLevel, 1.2);
+            player.CharacterCurrentXP += (int) Math.Pow(enemy.CharacterLevel, _battleXP);
         }
 
         public void GainXpFromQuest(bool isMajor)
@@ -24,11 +25,11 @@ namespace GofRPG_API
             Player player = Player.GetInstance();
             if(isMajor)
             {
-                player.CharacterCurrentXP += (int) Math.Pow(player.CharacterLevel, 2);
+                player.CharacterCurrentXP += (int) Math.Pow(player.CharacterLevel, _majorQuestXP);
             }
             else
             {
-                player.CharacterCurrentXP += (int) Math.Pow(player.CharacterLevel, 1.5);
+                player.CharacterCurrentXP += (int) Math.Pow(player.CharacterLevel, _minorQuestXP);
             }
         }
 
@@ -40,35 +41,21 @@ namespace GofRPG_API
 
         public void LevelUpPlayer()
         {
-            //check if they can level up
             if(!CanLevelUp())
             {
                 return;
             }
             Player player = Player.GetInstance();
-            //level up the player
             player.CharacterLevel++;
-            //change current xp and limit xp values
             player.CharacterCurrentXP -= player.CharacterLimitXP;
-            player.CharacterLimitXP = (int) Math.Pow(player.CharacterLevel, XpMultiplier);
-            //boost stat of player
+            player.CharacterLimitXP = (int) Math.Pow(player.CharacterLevel, _xpMultiplier);
             player.CharacterArchetype.LevelUpPlayerStats();
-            //check if the player can learn new move, get the moves, and add it to the list in the player's move set
-            // List<Move> list = new MoveDriver().GetMoves();
-            // foreach(Move move in list)
-            // {
-            //     player.CharacterMoveSet.AddMoveToBattleSlot(move);
-            //     player.CharacterMoveSet.AddMoveToList(move);
-            // }
-        }
-
-        public static Level GetInstance()
-        {
-            if(Instance == null)
+            List<Move> list = new MoveDriver().GetMoves();
+            foreach(Move move in list)
             {
-                Instance = new Level();
+                player.CharacterMoveSet.AddMoveToBattleSlot(move);
+                player.CharacterMoveSet.AddMoveToList(move);
             }
-            return Instance;
         }
     }
 }
