@@ -17,6 +17,7 @@ namespace GofRPG_API
         }
         protected void InitDriver(){
             String connectionString = @_files.DecryptFile();
+            _files.EncryptFile();
             MySqlConnection = new MySqlConnection(connectionString);
             MySqlConnection.Open();
         }
