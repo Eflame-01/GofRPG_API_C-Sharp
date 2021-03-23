@@ -21,6 +21,10 @@ namespace GofRPG_API
 
         public override void UseItem(Character character)
         {
+            if(!CharacterHoldingItem(character))
+            {
+                return;
+            }
             //TODO: get the base stat of the player
             int stat1 = GetStat(StatBoost, character);
             int stat2 = GetStat(StatReduction, character);
@@ -42,6 +46,10 @@ namespace GofRPG_API
 
         public override void StopItemUse(Character character)
         {
+            if(!CharacterHoldingItem(character))
+            {
+                return;
+            }
             //TODO: subtract the amount of points from the use by the stat boost difference
             RevertStat(StatBoost, character, true);
             //TODO: add the amount of points from the user by the stat reduction difference

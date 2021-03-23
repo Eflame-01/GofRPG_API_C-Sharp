@@ -16,7 +16,7 @@ namespace GofRPG_API
             CharacterBattleStatus = new BattleStatus();
             CharacterItem = null;
             CharacterType = "PLAYER";
-            CharacterID = "PLAYER1";
+            CharacterID = "PLAYER_1";
         }
         private static Player InstanceOfPlayer{get; set;}
         public int CharacterCurrentXP{get; set;}

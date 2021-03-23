@@ -15,6 +15,10 @@ namespace GofRPG_API
         }
         public override void UseItem(Character character)
         {
+            if(!CharacterHoldingItem(character))
+            {
+                return;
+            }
             //TODO: check if they can go first
             if(CanGoFirst())
             {

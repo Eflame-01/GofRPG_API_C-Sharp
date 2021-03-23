@@ -15,6 +15,10 @@ namespace GofRPG_API
         }
         public override void UseItem(Character character)
         {
+            if(!CharacterHoldingItem(character))
+            {
+                return;
+            }
             //TODO: get the amount to heal character based on healPercent
             int fullHp = character.CharacterBaseStat.FullHp;
             int hp = character.CharacterBaseStat.Hp;

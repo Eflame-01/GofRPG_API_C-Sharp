@@ -19,6 +19,10 @@ namespace GofRPG_API
 
         public override void UseItem(Character character)
         {
+            if(!CharacterHoldingItem(character))
+            {
+                return;
+            }
             //TODO: heal/revive character based on heal amount
             int newHp = GetHealAmount(character);
             character.CharacterBaseStat.Hp = newHp;

@@ -18,5 +18,22 @@ namespace GofRPG_API
         {
             //do nothing
         }
+
+        public bool CharacterHoldingItem(Character character)
+        {
+            if(character == null)
+            {
+                return false;
+            }
+            if(character.CharacterItem == null)
+            {
+                return false;
+            }
+            if(!character.CharacterItem.Equals(this))
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }
