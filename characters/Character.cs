@@ -4,26 +4,25 @@ namespace GofRPG_API
 {
     public abstract class Character
     {
-        private String _characterName;
         private String _characterSex;
         private int _characterGold;
         private int _characterLevel;
 
-        public String CharacterName {get; set;}
+        public String CharacterName {get; protected set;}
         public String CharacterType {get; protected set;}
         public BaseStat CharacterBaseStat {get; set;}
         public BattleStatus CharacterBattleStatus {get; set;}
         public Item CharacterItem{get; set;}
         public String CharacterID{ get; protected set;}
         public Archetype CharacterArchetype {get; set;}
-        public MoveSet CharacterMoveSet {get; set;}
+        public MoveSet CharacterMoveSet {get; protected set;}
         public String CharacterSex
         {
             get
             {
                 return _characterSex;
             }
-            set
+            protected set
             {
                 if(value.Equals("MALE") || value.Equals("FEMALE") || value.Equals("MALEFE"))
                 {

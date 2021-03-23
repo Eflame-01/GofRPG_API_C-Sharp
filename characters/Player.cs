@@ -14,14 +14,17 @@ namespace GofRPG_API
             CharacterLimitXP = 1;
             CharacterBaseStat = new BaseStat();
             CharacterBattleStatus = new BattleStatus();
+            PlayerBag = new Bag();
             CharacterItem = null;
             CharacterType = "PLAYER";
             CharacterID = "PLAYER_1";
         }
+
         private static Player InstanceOfPlayer{get; set;}
         public int CharacterCurrentXP{get; set;}
         public int CharacterLimitXP{get; set;}
         public Bag PlayerBag{get; set;}
+        
         public static Player GetInstance()
         {
             if(InstanceOfPlayer == null){

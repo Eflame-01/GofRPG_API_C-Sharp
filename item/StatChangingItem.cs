@@ -17,6 +17,8 @@ namespace GofRPG_API
             ItemLevel = level;
             StatBoost = statBoost;
             StatReduction = statReduction;
+            StatBoostDifference = 0;
+            StatReductionDifference = 0;
         }
 
         public override void UseItem(Character character)
@@ -25,10 +27,8 @@ namespace GofRPG_API
             {
                 return;
             }
-            //TODO: get the base stat of the player
             int stat1 = GetStat(StatBoost, character);
             int stat2 = GetStat(StatReduction, character);
-            //TODO: boost/reduce stat of player based on points
             if(StatBoost != null)
             {
                 StatBoost.BoostStat(character);
@@ -37,7 +37,6 @@ namespace GofRPG_API
             {
                 StatReduction.ReduceStat(character);
             }
-            //TODO: calculate the difference and add it to stat boost difference/stat reduction difference
             int boostedStat = GetStat(StatBoost, character);
             int reducedStat = GetStat(StatReduction, character);
             StatBoostDifference = (stat1 - boostedStat); //becomes negative value to subtract it from the base stat later
@@ -50,10 +49,10 @@ namespace GofRPG_API
             {
                 return;
             }
-            //TODO: subtract the amount of points from the use by the stat boost difference
             RevertStat(StatBoost, character, true);
-            //TODO: add the amount of points from the user by the stat reduction difference
             RevertStat(StatReduction, character, false);
+            StatBoostDifference = 0;
+            StatReductionDifference = 0;
         }
 
         private int GetStat(Stat stat, Character character)

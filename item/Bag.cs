@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace GofRPG_API
@@ -26,9 +27,12 @@ namespace GofRPG_API
             }
         }
 
-        public void addItemToBag(Item item, int amount)
+        public void AddItemToBag(Item item, int amount)
         {
-            int currentAmount = 1;
+            if(!ItemExist(item)){
+                return;
+            }
+            int currentAmount = amount;
             if(ItemList.ContainsKey(item))
             {
                 currentAmount += ItemList[item];
@@ -46,15 +50,19 @@ namespace GofRPG_API
             TotalItemAmount += amount;
         }
 
-        public void discardItemFromBag(Item item, int amount)
+        public void DiscardItemFromBag(Item item, int amount)
         {
+            if(!ItemExist(item))
+            {
+                return;
+            }
             if(!ItemList.ContainsKey(item))
             {
                 return;
             }
 
             int currentAmount = ItemList[item];
-            if(amount > currentAmount)
+            if(amount >= currentAmount)
             {
                 ItemList.Remove(item);
                 TotalItemAmount -= currentAmount;
@@ -66,17 +74,41 @@ namespace GofRPG_API
             }
         }
 
-        public void equipItemToPlayer(Item item)
+        public void EquipItemToPlayer(Item item)
         {
-            //TODO: set the item in the player's item's data member to the item
-            //TODO: discard an item from the bag
+            if(PlayerHasItem() && !ItemExist(item))
+            {
+                return;
+            }
+            Player player = Player.GetInstance();
+            player.CharacterItem = item;
+            DiscardItemFromBag(item, 1);
         }
 
-        public void unequipItemFromPlayer(Item item)
+        public void UnequipItemFromPlayer()
         {
-            //TODO: set the item in the player's item's data member to null
-            //TODO: if the item was a stat changing item then call the function stop item in use to get rid of the stat changes
-            //TODO: add the item to the bag
+            if(!PlayerHasItem())
+            {
+                return;
+            }
+            Player player = Player.GetInstance();
+            Item item = player.CharacterItem;
+            if(item.ItemID.Equals("STAT CHANGING"))
+            {
+                item.StopItemUse(player);
+            }
+            player.CharacterItem = null;
+            AddItemToBag(item, 1);
+        }
+
+        public bool PlayerHasItem()
+        {
+            return Player.GetInstance().CharacterItem != null;
+        }
+
+        private bool ItemExist(Item item)
+        {
+            return (item != null && new ItemDriver().GetItem(item.ItemName) != null);
         }
     }
 }

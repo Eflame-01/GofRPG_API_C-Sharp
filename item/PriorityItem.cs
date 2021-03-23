@@ -19,10 +19,8 @@ namespace GofRPG_API
             {
                 return;
             }
-            //TODO: check if they can go first
             if(CanGoFirst())
             {
-                //TODO: make player go first
                 character.CharacterBattleStatus.TurnStatus = TurnStatus.GO_FIRST;
             }
         }

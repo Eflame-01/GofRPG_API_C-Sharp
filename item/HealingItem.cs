@@ -19,7 +19,6 @@ namespace GofRPG_API
             {
                 return;
             }
-            //TODO: get the amount to heal character based on healPercent
             int fullHp = character.CharacterBaseStat.FullHp;
             int hp = character.CharacterBaseStat.Hp;
             int healBoost = (int)(fullHp * HealPercent);
@@ -27,16 +26,15 @@ namespace GofRPG_API
             {
                 healBoost = 1;
             }
-            int newHp = hp + healBoost;
+            hp += healBoost;
 
-            //TODO: heal character by at most that amount
-            if(newHp > fullHp)
+            if(hp >= fullHp)
             {
                 character.CharacterBaseStat.Hp = fullHp;
             }
             else
             {
-                character.CharacterBaseStat.Hp = newHp;
+                character.CharacterBaseStat.Hp = hp;
             }
         }
     }

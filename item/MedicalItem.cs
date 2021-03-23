@@ -23,11 +23,9 @@ namespace GofRPG_API
             {
                 return;
             }
-            //TODO: heal/revive character based on heal amount
             int newHp = GetHealAmount(character);
             character.CharacterBaseStat.Hp = newHp;
 
-            //TODO: give status restore based on stausCure
             CureStatusCondition(character);
         }
 
@@ -35,15 +33,15 @@ namespace GofRPG_API
         {
             int fullHp = character.CharacterBaseStat.FullHp;
             int hp = character.CharacterBaseStat.Hp;
-            int newHp = hp;
+            int newHp = 0;
             if(HealAmount == -1)
             {
-                int healAmount = (int) (hp * 0.5);
+                int healAmount = (int) (fullHp * 0.5);
                 if(healAmount <= 0)
                 {
                     healAmount = 1;
                 }
-                newHp += healAmount;
+                newHp = healAmount;
             }
             else if(HealAmount == -2)
             {
@@ -52,13 +50,13 @@ namespace GofRPG_API
                     return 0;
                 }
                 int healAmount = fullHp;
-                newHp += healAmount;
+                newHp = healAmount;
             }
             else
             {
                 newHp += HealAmount;
             }
-            if(newHp > fullHp)
+            if(newHp >= fullHp)
             {
                 newHp = fullHp;
             }
@@ -69,7 +67,7 @@ namespace GofRPG_API
         {
             StatusCondition characterStatusCondition = character.CharacterBattleStatus.StatusCondition;
 
-            if(characterStatusCondition == null || !characterStatusCondition.GetStatusConditionName().Equals(StatusCure))
+            if(characterStatusCondition == null || !characterStatusCondition.GetStatusConditionName().Equals(StatusCure) || !StatusCure.Equals("ALL"))
             {
                 return;
             }
