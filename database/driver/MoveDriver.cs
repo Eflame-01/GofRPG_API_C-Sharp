@@ -93,7 +93,13 @@ namespace GofRPG_API
                 MySqlDataReader = MySqlCommand.ExecuteReader();
                 if(MySqlDataReader.Read())
                 {
-                    moveTwo = new StatChangingMove(name, description, MySqlDataReader.GetDouble(1), MySqlDataReader.GetString(0), level, energyPoints, energyPoints, MakeStatBoost(MySqlDataReader), MakeStatReduction(MySqlDataReader), MySqlDataReader.GetBoolean(2));
+                    String statOne = MySqlDataReader.GetString(3);
+                    String statTwo = MySqlDataReader.GetString(4);
+                    bool isStatOneBoosted = MySqlDataReader.GetBoolean(5);
+                    bool isStatTwoBoosted = MySqlDataReader.GetBoolean(6);
+                    double statOnePercent = MySqlDataReader.GetDouble(7);
+                    double statTwoPercent = MySqlDataReader.GetDouble(8);
+                    moveTwo = new StatChangingMove(name, description, MySqlDataReader.GetDouble(1), MySqlDataReader.GetString(0), level, energyPoints, energyPoints, MakeStatBoost(statOne, isStatOneBoosted, statOnePercent, statTwo, isStatTwoBoosted, statTwoPercent), MakeStatReduction(statOne, isStatOneBoosted, statOnePercent, statTwo, isStatTwoBoosted, statTwoPercent), MySqlDataReader.GetBoolean(2));
                     MySqlDataReader.Close();
                 }
                 break;
@@ -233,7 +239,13 @@ namespace GofRPG_API
                 MySqlDataReader = MySqlCommand.ExecuteReader();
                 if(MySqlDataReader.Read())
                 {
-                    moveOne = new StatChangingMove(name, description, MySqlDataReader.GetDouble(1), MySqlDataReader.GetString(0), level, energyPoints, energyPoints, MakeStatBoost(MySqlDataReader), MakeStatReduction(MySqlDataReader), MySqlDataReader.GetBoolean(2));
+                    String statOne = MySqlDataReader.GetString(3);
+                    String statTwo = MySqlDataReader.GetString(4);
+                    bool isStatOneBoosted = MySqlDataReader.GetBoolean(5);
+                    bool isStatTwoBoosted = MySqlDataReader.GetBoolean(6);
+                    double statOnePercent = MySqlDataReader.GetDouble(7);
+                    double statTwoPercent = MySqlDataReader.GetDouble(8);
+                    moveTwo = new StatChangingMove(name, description, MySqlDataReader.GetDouble(1), MySqlDataReader.GetString(0), level, energyPoints, energyPoints, MakeStatBoost(statOne, isStatOneBoosted, statOnePercent, statTwo, isStatTwoBoosted, statTwoPercent), MakeStatReduction(statOne, isStatOneBoosted, statOnePercent, statTwo, isStatTwoBoosted, statTwoPercent), MySqlDataReader.GetBoolean(2));
                     MySqlDataReader.Close();
                 }
                 break;
@@ -314,34 +326,6 @@ namespace GofRPG_API
             }
 
             return statusCondition;
-        }
-
-        private Stat MakeStatBoost(MySqlDataReader reader)
-        {
-            Stat statBoost = null;
-            if(reader.GetBoolean(5))
-            {
-                statBoost = Stat.GetStat(reader.GetString(3), reader.GetDouble(7), 0);
-            }
-            else if(reader.GetBoolean(6))
-            {
-                statBoost = Stat.GetStat(reader.GetString(4), reader.GetDouble(8), 0);
-            }
-            return statBoost;
-        }
-
-        private Stat MakeStatReduction(MySqlDataReader reader)
-        {
-            Stat statReduction = null;
-            if(!reader.GetBoolean(5))
-            {
-                statReduction = Stat.GetStat(reader.GetString(3), 0, reader.GetDouble(7));
-            }
-            else if(!reader.GetBoolean(6))
-            {
-                statReduction = Stat.GetStat(reader.GetString(4), 0, reader.GetDouble(8));
-            }
-            return statReduction;
         }
 
         private ProtectionStatus MakeProtectionStatus(String status)
