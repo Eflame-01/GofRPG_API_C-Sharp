@@ -66,5 +66,33 @@ namespace GofRPG_API
             player.CharacterBaseStat.Spd += baseStat.Spd;
             player.CharacterBaseStat.Hp += baseStat.Hp;
         }
+
+        public static Archetype GetArchetype(String name)
+        {
+            switch(name)
+            {
+                case "REGULAR SWORDSMAN":
+                return new RegularSwordsman();
+                case "DUAL SWORDSMAN":
+                return new DualSwordsman();
+                case "KNIGHT":
+                return new Knight();
+                case "HEAVY SHIELDER":
+                return new HeavyShielder();
+                case "NATURE MANIPULATOR":
+                return new NatureManipulator();
+                case "ENERGY MANIPULATOR":
+                return new EnergyManipulator();
+                case "BERSERKER":
+                return new Berserker();
+                case "MIXED MARTIAL ARTIST":
+                return new MixedMartialArtist();
+                case "WEAPON SPECIALIST":
+                return new WeaponSpecialist();
+                case "COMBAT SPECIALIST":
+                return new CombatSpecialist();
+            }
+            return null;
+        }
     }
 }

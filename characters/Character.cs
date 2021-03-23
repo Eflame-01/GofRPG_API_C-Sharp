@@ -14,7 +14,7 @@ namespace GofRPG_API
         public BaseStat CharacterBaseStat {get; set;}
         public BattleStatus CharacterBattleStatus {get; set;}
         public Item CharacterItem{get; set;}
-        public int CharacterID{ get; protected set;}
+        public String CharacterID{ get; protected set;}
         public Archetype CharacterArchetype {get; set;}
         public MoveSet CharacterMoveSet {get; set;}
         public String CharacterSex
