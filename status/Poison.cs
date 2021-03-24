@@ -14,7 +14,6 @@ namespace GofRPG_API
         public double PoisonDamage {get; set;}
         public double PoisonIncrementer {get; set;}
 
-        //Constructors
         public Poison(double damage, double incrementer)
         {
             PoisonDamage = SetPoisonDamage(damage);
@@ -26,7 +25,6 @@ namespace GofRPG_API
             PoisonIncrementer = 1.0;
         }
 
-        //Override Methods
         public String GetStatusConditionName()
         {
             return StatusName;
@@ -57,8 +55,6 @@ namespace GofRPG_API
                 character.CharacterBattleStatus.StatusCondition = null;
             }
         }
-
-        //Private Methods
         private double SetPoisonDamage(double damage)
         {
             if(damage < 0.05){

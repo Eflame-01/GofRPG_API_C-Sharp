@@ -12,7 +12,6 @@ namespace GofRPG_API
             }
         }
 
-        //Constructor
         public Flinch()
         {
 
@@ -22,7 +21,6 @@ namespace GofRPG_API
         {
             return StatusName;
         }
-
         public void ImplementStatusCondition(Character character)
         {
             //TODO: set the turn status to cannot move, then remove the status condition
@@ -32,7 +30,6 @@ namespace GofRPG_API
             }
             RemoveStatusCondition(character);
         }
-
         public void RemoveStatusCondition(Character character)
         {
             if(character.CharacterBattleStatus.StatusCondition.Equals(this))

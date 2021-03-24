@@ -14,7 +14,6 @@ namespace GofRPG_API
         public int StunDuration {get; set;}
         public double StunProbability {get; set;}
 
-        //Constructors
         public Stun(int duration, double probability)
         {
             StunDuration = SetStunDuration(duration);
@@ -26,7 +25,6 @@ namespace GofRPG_API
             StunProbability = 0.25;
         }
 
-        //Override Methods
         public String GetStatusConditionName()
         {
             return StatusName;
@@ -54,8 +52,6 @@ namespace GofRPG_API
                 character.CharacterBattleStatus.StatusCondition = null;
             }
         }
-
-        //Private Methods
         private int SetStunDuration(int duration)
         {
             if(duration < 3){

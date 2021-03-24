@@ -13,7 +13,6 @@ namespace GofRPG_API
         }
         public double BurnDamage {get; set;}
 
-        //Constructors
         public Burn(double damage)
         {
             BurnDamage = SetBurnDamage(damage);
@@ -23,12 +22,10 @@ namespace GofRPG_API
             BurnDamage = 0.05;
         }
 
-        //Override Methods
         public String GetStatusConditionName()
         {
             return StatusName;
         }
-
         public void ImplementStatusCondition(Character character)
         {
             if(character.CharacterBattleStatus.StatusCondition.Equals(this))
@@ -38,7 +35,6 @@ namespace GofRPG_API
                 character.CharacterBaseStat.Hp = hp;
             }
         }
-
         public void RemoveStatusCondition(Character character)
         {
             if(character.CharacterBattleStatus.StatusCondition.Equals(this))
@@ -46,8 +42,6 @@ namespace GofRPG_API
                 character.CharacterBattleStatus.StatusCondition = null;
             }
         }
-
-        //Private Methods
         private double SetBurnDamage(double damage)
         {
             if(damage < 0.05 ){
