@@ -146,11 +146,11 @@ namespace GofRPG_API
                 {
                     if(moveTwo != null)
                     {
-                        moveOne = new CounterMove(moveTwo, name, description, MySqlDataReader.GetDouble(2), MySqlDataReader.GetString(0), level, energyPoints, energyPoints);
+                        moveOne = new CounterMove(moveTwo, name, description, MySqlDataReader.GetDouble(2), MySqlDataReader.GetDouble(0), MySqlDataReader.GetString(0), level, energyPoints, energyPoints);
                     }
                     else
                     {
-                        moveOne = new CounterMove(name, description, MySqlDataReader.GetDouble(2), MySqlDataReader.GetString(0), level, energyPoints, energyPoints);
+                        moveOne = new CounterMove(name, description, MySqlDataReader.GetDouble(2), MySqlDataReader.GetDouble(0), MySqlDataReader.GetString(0), level, energyPoints, energyPoints);
                     }
                     MySqlDataReader.Close();
                 }

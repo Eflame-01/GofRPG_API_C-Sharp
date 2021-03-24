@@ -20,20 +20,20 @@ namespace GofRPG_API
         public abstract void ResetMove();
         public bool DidMoveMiss(Character target)
         {
-            //P(Accuracy Failed) OR P(Target Evaded)
+            if(target == null)
+            {
+                return true;
+            }
             Random rand = new Random();
             double accuracyFailed = 1 - PrimaryMoveAccuracy;
             double targetEvaded = (double)target.CharacterBaseStat.Eva / (double)target.CharacterBaseStat.GetBaseStatTotal();
             double probabilityMoveMissed = accuracyFailed + targetEvaded - (accuracyFailed - targetEvaded);
-
             return (rand.NextDouble() <= probabilityMoveMissed);
         }
         public bool DidSideEffectMiss()
         {
-            //Side Effects imply that the move has already hit, so we don't calculate target's evasion
             Random rand = new Random();
             double probabilityMoveMissed = 1.0 - SecondaryMoveAccuracy;
-
             return (rand.NextDouble() <= probabilityMoveMissed);
         }
     }

@@ -6,7 +6,7 @@ namespace GofRPG_API
     {
         public int CalculateDamage(Character user, Character target)
         {
-            if(user.Equals(null) || target.Equals(null))
+            if(user == null || target == null)
             {
                 return 0;
             }
@@ -21,6 +21,10 @@ namespace GofRPG_API
         }
         public void HitTarget(int damage, Character target)
         {
+            if(target == null || damage == 0)
+            {
+                return;
+            }
             int hp = target.CharacterBaseStat.Hp - damage;
             if(hp < 0)
             {

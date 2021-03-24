@@ -43,6 +43,10 @@ namespace GofRPG_API
         }
         public override void PerformSideEffect(Character target)
         {
+            if(target == null)
+            {
+                return;
+            }
             int recoilDamage = (int) (target.CharacterBaseStat.Hp * RecoilDamagePercent);
             int hp = target.CharacterBaseStat.Hp - recoilDamage;
             if(hp < 0)

@@ -27,6 +27,7 @@ namespace GofRPG_API
             MoveMaxEnergyPoints = maxEnergyPoints;
             MoveType = "KNOCKOUT";
         }
+        
         public override void PerformMove(Character user, Character target)
         {
             if(user == null || target == null)

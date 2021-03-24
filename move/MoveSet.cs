@@ -6,11 +6,13 @@ namespace GofRPG_API
     {
         public List<Move> MovesLearned {get; private set;}
         public Move[] BattleMoves {get; private set;}
+
         public MoveSet()
         {
             MovesLearned = new List<Move>();
             BattleMoves = new Move[4];
         }
+        
         public bool IsMoveInBattleSlot(Move move)
         {
             for(int i = 0; i < BattleMoves.Length; i++)
