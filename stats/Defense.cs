@@ -11,7 +11,6 @@ namespace GofRPG_API
             ReductionPercent = reduction;
 
         }
-
         public Defense()
         {
             StatName = "DEFENSE";
@@ -31,7 +30,6 @@ namespace GofRPG_API
                character.CharacterBaseStat.Def += 1;
             }
        }
-
         public override void ReduceStat(Character character)
         {
             int boostVal = (int) (character.CharacterBaseStat.Def * BoostPercent);

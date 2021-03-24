@@ -10,7 +10,6 @@ namespace GofRPG_API
             BoostPercent = boost;
             ReductionPercent = reduction;
         }
-
         public Attack()
         {
             StatName = "ATTACK";
@@ -30,7 +29,6 @@ namespace GofRPG_API
                character.CharacterBaseStat.Atk += 1;
            }
        }
-
         public override void ReduceStat(Character character)
         {
             int boostVal = (int) (character.CharacterBaseStat.Atk * BoostPercent);

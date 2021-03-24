@@ -11,7 +11,6 @@ namespace GofRPG_API
             ReductionPercent = reduction;
 
         }
-
         public Evasion()
         {
             StatName = "EVASION";
@@ -31,7 +30,6 @@ namespace GofRPG_API
                character.CharacterBaseStat.Eva += 1;
             }
        }
-
         public override void ReduceStat(Character character)
         {
             int boostVal = (int) (character.CharacterBaseStat.Eva * BoostPercent);

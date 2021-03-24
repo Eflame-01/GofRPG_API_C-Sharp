@@ -11,7 +11,6 @@ namespace GofRPG_API
             ReductionPercent = reduction;
 
         }
-
         public HitPoints()
         {
             StatName = "HIT POINTS";
@@ -31,7 +30,6 @@ namespace GofRPG_API
                character.CharacterBaseStat.Hp += 1;
             }
        }
-
         public override void ReduceStat(Character character)
         {
             int boostVal = (int) (character.CharacterBaseStat.Hp * BoostPercent);

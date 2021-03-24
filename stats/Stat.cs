@@ -18,9 +18,17 @@ namespace GofRPG_API
             {
                 case "ATK":
                 return new Attack(boost, reduction);
+                case "DEF":
+                return new Defense(boost, reduction);
+                case "EVA":
+                return new Evasion(boost, reduction);
+                case "HP":
+                return new HitPoints(boost, reduction);
+                case "SPD":
+                return new Speed(boost, reduction);
+                default:
+                return null;
             }
-
-            return null;
         }
     }
 }
