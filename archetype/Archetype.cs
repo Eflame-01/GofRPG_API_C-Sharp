@@ -24,7 +24,6 @@ namespace GofRPG_API
 
         public void LevelUpPlayerStats()
         {
-            //TODO: check if the player should be leveling up
             Random rand = new Random();
             double levelUpProbability = rand.NextDouble();
 
