@@ -8,6 +8,9 @@ namespace GofRPG_API
         static void Main(string[] args)
         {
             Player player = Player.GetInstance();
+            Files f = new Files();
+            f.EncryptFile();
+            f.DecryptFile();
         }
     }
 }
