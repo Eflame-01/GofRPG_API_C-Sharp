@@ -24,6 +24,7 @@ namespace GofRPG_API
         public int CharacterCurrentXP{get; set;}
         public int CharacterLimitXP{get; set;}
         public Bag PlayerBag{get; set;}
+        public Level PlayerLevel{get; private set;}
         
         public static Player GetInstance()
         {
