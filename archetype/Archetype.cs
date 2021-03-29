@@ -22,8 +22,6 @@ namespace GofRPG_API
             }
         }
 
-        //TODO: public ArrayList<Move> addMoves()
-
         public void LevelUpPlayerStats()
         {
             //TODO: check if the player should be leveling up
