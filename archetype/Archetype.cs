@@ -63,7 +63,7 @@ namespace GofRPG_API
             player.CharacterBaseStat.Spd += baseStat.Spd;
             player.CharacterBaseStat.Hp += baseStat.Hp;
         }
-
+        
         public static Archetype GetArchetype(String name)
         {
             switch(name)
