@@ -14,6 +14,7 @@ namespace GofRPG_API
         public int MoveLevel {get; protected set;}
         public int MoveEnergyPoints {get; protected set;}
         public int MoveMaxEnergyPoints {get; protected set;}
+        public ArchetypeID MoveArchetype {get; protected set;}
         public abstract void PerformMove(Character user, Character target);
         public abstract void PerformSideEffect(Character target);
         public abstract bool IsPrimaryMove();
