@@ -6,6 +6,7 @@ namespace GofRPG_API
     {
         public WeaponSpecialist()
         {
+            ArchetypeID = ArchetypeID.WEAPON_SPECIALIST;
             MainArchetypeName = "SPECIALST";
             ArchetypeName = "WEAPON SPECIALIST";
             CharacterBaseStat = new BaseStat(6, 4, 5, 4, 6);

@@ -6,6 +6,7 @@ namespace GofRPG_API
     {
         public Knight()
         {
+            ArchetypeID = ArchetypeID.KNIGHT;
             MainArchetypeName = "DEFENDER";
             ArchetypeName = "KNIGHT";
             CharacterBaseStat = new BaseStat(4, 8, 2, 4, 6);

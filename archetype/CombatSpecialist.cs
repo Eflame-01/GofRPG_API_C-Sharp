@@ -6,6 +6,7 @@ namespace GofRPG_API
     {
         public CombatSpecialist()
         {
+            ArchetypeID = ArchetypeID.COMBAT_SPECIALIST;
             MainArchetypeName = "SPECIALST";
             ArchetypeName = "COMBAT SPECIALIST";
             CharacterBaseStat = new BaseStat(4, 6, 5, 6, 4);

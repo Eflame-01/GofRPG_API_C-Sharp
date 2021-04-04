@@ -12,6 +12,7 @@ namespace GofRPG_API
         public BaseStat LevelUpBoost5 {get; protected set;}
         public String ArchetypeName {get; protected set;}
         public String MainArchetypeName {get; protected set;}
+        public ArchetypeID ArchetypeID{get; protected set;}
 
         public void AddPlayerBaseStats()
         {

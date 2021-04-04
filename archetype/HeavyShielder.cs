@@ -6,6 +6,7 @@ namespace GofRPG_API
     {
         public HeavyShielder()
         {
+            ArchetypeID = ArchetypeID.HEAVY_SHIELDER;
             MainArchetypeName = "DEFENDER";
             ArchetypeName = "HEAVY SHIELDER";
             CharacterBaseStat = new BaseStat(4, 9, 3, 4, 5);

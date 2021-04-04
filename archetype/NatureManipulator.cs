@@ -6,6 +6,7 @@ namespace GofRPG_API
     {
         public NatureManipulator()
         {
+            ArchetypeID = ArchetypeID.NATURE_MANIPULATOR;
             MainArchetypeName = "MYSTIC";
             ArchetypeName = "NATURE MANIPULATOR";
             CharacterBaseStat = new BaseStat(6, 5, 2, 2, 10);

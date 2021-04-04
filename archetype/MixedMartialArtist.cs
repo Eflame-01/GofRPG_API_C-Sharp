@@ -6,6 +6,7 @@ namespace GofRPG_API
     {
         public MixedMartialArtist()
         {
+            ArchetypeID = ArchetypeID.MIXED_MARTIAL_ARTIST;
             MainArchetypeName = "BRAWLER";
             ArchetypeName = "MIXED MARTIAL ARTIST";
             CharacterBaseStat = new BaseStat(6, 5, 2, 7, 4);

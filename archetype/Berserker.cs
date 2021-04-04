@@ -6,6 +6,7 @@ namespace GofRPG_API
     {
         public Berserker()
         {
+            ArchetypeID = ArchetypeID.BERSERKER;
             MainArchetypeName = "BRAWLER";
             ArchetypeName = "BERSERKER";
             CharacterBaseStat = new BaseStat(7, 5, 2, 8, 3);

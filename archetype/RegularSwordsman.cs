@@ -6,6 +6,7 @@ namespace GofRPG_API
     {
         public RegularSwordsman()
         {
+            ArchetypeID = ArchetypeID.REGULAR_SWORDSMAN;
             MainArchetypeName = "SWORDSMAN";
             ArchetypeName = "REGULAR SOWRDSMAN";
             CharacterBaseStat = new BaseStat(8, 3, 3, 6, 5);

@@ -6,6 +6,7 @@ namespace GofRPG_API
     {
         public EnergyManipulator()
         {
+            ArchetypeID  = ArchetypeID.ENERGY_MANIPULATOR;
             MainArchetypeName = "MYSTIC";
             ArchetypeName = "ENERGY MANIPULATOR";
             CharacterBaseStat = new BaseStat(6, 6, 2, 3, 8);
