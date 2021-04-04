@@ -27,6 +27,7 @@ namespace GofRPG_API
             {
                 return;
             }
+            base.UseItem(character); // sets ItemInUse to true
             int stat1 = GetStat(StatBoost, character);
             int stat2 = GetStat(StatReduction, character);
             if(StatBoost != null)
@@ -45,14 +46,16 @@ namespace GofRPG_API
 
         public override void StopItemUse(Character character)
         {
-            if(!CharacterHoldingItem(character))
+            if(!CharacterHoldingItem(character) && !ItemInUse)
             {
                 return;
             }
+            base.StopItemUse(character); // sets ItemInUse to false
             RevertStat(StatBoost, character, true);
             RevertStat(StatReduction, character, false);
             StatBoostDifference = 0;
             StatReductionDifference = 0;
+            ItemInUse = false;
         }
 
         private int GetStat(Stat stat, Character character)

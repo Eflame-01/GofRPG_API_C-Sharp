@@ -21,6 +21,7 @@ namespace GofRPG_API
             {
                 return;
             }
+            base.UseItem(character);
             int hp = character.CharacterBaseStat.Hp + HealAmount;
             if(hp >= character.CharacterBaseStat.FullHp)
             {

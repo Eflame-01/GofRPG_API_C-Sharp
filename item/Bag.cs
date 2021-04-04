@@ -93,10 +93,7 @@ namespace GofRPG_API
             }
             Player player = Player.GetInstance();
             Item item = player.CharacterItem;
-            if(item.ItemID.Equals("STAT CHANGING"))
-            {
-                item.StopItemUse(player);
-            }
+            item.StopItemUse(player);
             player.CharacterItem = null;
             AddItemToBag(item, 1);
         }

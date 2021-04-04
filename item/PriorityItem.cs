@@ -19,6 +19,7 @@ namespace GofRPG_API
             {
                 return;
             }
+            base.UseItem(character); // sets ItemInUse to true
             if(CanGoFirst())
             {
                 character.CharacterBattleStatus.TurnStatus = TurnStatus.GO_FIRST;

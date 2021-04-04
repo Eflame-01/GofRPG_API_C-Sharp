@@ -23,6 +23,7 @@ namespace GofRPG_API
             {
                 return;
             }
+            base.UseItem(character); // sets ItemInUse to true
             int newHp = GetHealAmount(character);
             character.CharacterBaseStat.Hp = newHp;
 
