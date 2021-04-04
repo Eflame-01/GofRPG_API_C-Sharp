@@ -81,7 +81,7 @@ namespace GofRPG_API
             return list;
         }
 
-        private Move MakeMove(String name, String description, String typeOne, String typeTwo, int level, String Archetype, int energyPoints)
+        private Move MakeMove(String name, String description, String typeOne, String typeTwo, int level, String archetype, int energyPoints)
         {
             //Making the secondary move if this move has one
             Move moveTwo = null;
