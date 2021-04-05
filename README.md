@@ -4,8 +4,8 @@
 1. [Author(s)](#author(s))
 1. [Purpose](#purpose)
 1. [Requirements](#requirements)
-1. [Resources](#rsources)
-1. [Diagrams](#dagram)
+1. [Resources](#resources)
+1. [Diagrams](#diagram)
 
 ## Author(s)
 Eseroghene Omene
