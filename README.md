@@ -37,5 +37,5 @@ moves, items, and npcs for the game.
 ## Diagrams
 
 ### Relational Database Diagram
-![Relational Database Diagram](images/diagrams/GofRPG_Database_UML.png)
+![Relational Database Diagram](.images/diagrams/GofRPG_Database_UML.png)
   
