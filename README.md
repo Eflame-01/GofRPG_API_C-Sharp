@@ -5,7 +5,7 @@
 1. [Purpose](#purpose)
 1. [Requirements](#requirements)
 1. [Resources](#resources)
-1. [Diagrams](#diagram)
+1. [Diagrams](#diagrams)
 
 ## Author(s)
 Eseroghene Omene
