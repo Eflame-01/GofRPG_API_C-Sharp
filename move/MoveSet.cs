@@ -12,8 +12,29 @@ namespace GofRPG_API
             MovesLearned = new List<Move>();
             BattleMoves = new Move[4];
         }
+
+        public void SwitchTwoMovesInList(int indexOne, int indexTwo)
+        {
+            Move moveOne = MovesLearned[indexOne];
+            Move moveTwo = MovesLearned[indexTwo];
+            MovesLearned[indexOne] = moveTwo;
+            MovesLearned[indexTwo] = moveOne;
+        }
+        public void SwitchTwoMovesInSlot(int indexOne, int indexTwo)
+        {
+            Move moveOne = BattleMoves[indexOne];
+            Move moveTwo = BattleMoves[indexTwo];
+            BattleMoves[indexOne] = moveTwo;
+            BattleMoves[indexTwo] = moveOne;
+        }
+
+        public void AddMove(Move move)
+        {
+            AddMoveToBattleSlot(move);
+            AddMoveToList(move);
+        }
         
-        public bool IsMoveInBattleSlot(Move move)
+        private bool IsMoveInBattleSlot(Move move)
         {
             for(int i = 0; i < BattleMoves.Length; i++)
             {
@@ -31,7 +52,7 @@ namespace GofRPG_API
             }
             return false;
         }
-        public bool IsMoveInList(Move move)
+        private bool IsMoveInList(Move move)
         {
             foreach(Move m in MovesLearned)
             {
@@ -42,21 +63,7 @@ namespace GofRPG_API
             }
             return false;
         }
-        public void SwitchTwoMovesInList(int indexOne, int indexTwo)
-        {
-            Move moveOne = MovesLearned[indexOne];
-            Move moveTwo = MovesLearned[indexTwo];
-            MovesLearned[indexOne] = moveTwo;
-            MovesLearned[indexTwo] = moveOne;
-        }
-        public void SwitchTwoMovesInSlot(int indexOne, int indexTwo)
-        {
-            Move moveOne = BattleMoves[indexOne];
-            Move moveTwo = BattleMoves[indexTwo];
-            BattleMoves[indexOne] = moveTwo;
-            BattleMoves[indexTwo] = moveOne;
-        }
-        public void AddMoveToBattleSlot(Move move)
+        private void AddMoveToBattleSlot(Move move)
         {
             if(BattleMoves.GetLength(1) == BattleMoves.Length || IsMoveInBattleSlot(move))
             {
@@ -71,7 +78,7 @@ namespace GofRPG_API
                 }
             }
         }
-        public void AddMoveToList(Move move)
+        private void AddMoveToList(Move move)
         {
             if(IsMoveInList(move))
             {
