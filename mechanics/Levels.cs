@@ -14,23 +14,38 @@ namespace GofRPG_API
         {
         }
 
-        public void GainXPFromBattle(Character enemy)
+        public int GainXPFromBattle(Character enemy)
         {
             Player player = Player.GetInstance();
-            player.CharacterCurrentXP += (int) Math.Pow(enemy.CharacterLevel, _battleXP);
+            int xp = 0;
+            if(enemy == null){
+                return 0;
+            }
+            xp += (int) Math.Pow(enemy.CharacterLevel, _battleXP);
+            player.CharacterCurrentXP += xp;
+            return xp;
         }
 
-        public void GainXpFromQuest(bool isMajor)
+        public int GainXpFromQuest(Quest quest)
         {
             Player player = Player.GetInstance();
-            if(isMajor)
+            int currentXp = player.CharacterCurrentXP;
+            int xp = 0;
+            if(quest == null)
             {
-                player.CharacterCurrentXP += (int) Math.Pow(player.CharacterLevel, _majorQuestXP);
+                return 0;
+            }
+            if(quest.IsMajor)
+            {
+                xp += (int) Math.Pow(player.CharacterLevel, _majorQuestXP);
             }
             else
             {
-                player.CharacterCurrentXP += (int) Math.Pow(player.CharacterLevel, _minorQuestXP);
+                xp += (int) Math.Pow(player.CharacterLevel, _minorQuestXP);
             }
+            
+            player.CharacterCurrentXP += xp;
+            return xp;
         }
 
         public bool CanLevelUp()
@@ -50,12 +65,14 @@ namespace GofRPG_API
             player.CharacterCurrentXP -= player.CharacterLimitXP;
             player.CharacterLimitXP = (int) Math.Pow(player.CharacterLevel, _xpMultiplier);
             player.CharacterArchetype.LevelUpPlayerStats();
-            List<Move> list = new MoveDriver().GetMoves();
-            foreach(Move move in list)
-            {
-                player.CharacterMoveSet.AddMoveToBattleSlot(move);
-                player.CharacterMoveSet.AddMoveToList(move);
-            }
+
+            //TODO: dead code. Do not retrieve moves from here, moves should be retrieved after the player has leveled up
+            // List<Move> list = new MoveDriver().GetMoves();
+            // foreach(Move move in list)
+            // {
+            //     player.CharacterMoveSet.AddMoveToBattleSlot(move);
+            //     player.CharacterMoveSet.AddMoveToList(move);
+            // }
         }
     }
 }
