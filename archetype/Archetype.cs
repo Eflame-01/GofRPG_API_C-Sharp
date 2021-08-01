@@ -17,7 +17,7 @@ namespace GofRPG_API
         public void AddPlayerBaseStats()
         {
             Player player = Player.GetInstance();
-            if(player.CharacterLevel == 1)
+            if(player.CharacterLevel == 1 && player.CharacterBaseStat.GetBaseStatTotal() == 0)
             {
                 player.CharacterBaseStat = CharacterBaseStat;
             }
@@ -91,6 +91,33 @@ namespace GofRPG_API
                 return new CombatSpecialist();
             }
             return null;
+        }
+
+        public static ArchetypeID GetArchetypeID(String name)
+        {
+            switch(name){
+                case "REGULAR SWORDSMAN":
+                return ArchetypeID.REGULAR_SWORDSMAN;
+                case "DUAL SWORDSMAN":
+                return ArchetypeID.DUAL_SWORDSMAN;
+                case "KNIGHT":
+                return ArchetypeID.KNIGHT;
+                case "HEAVY SHIELDER":
+                return ArchetypeID.HEAVY_SHIELDER;
+                case "NATURE MANIPULATOR":
+                return ArchetypeID.NATURE_MANIPULATOR;
+                case "ENERGY MANIPULATOR":
+                return ArchetypeID.ENERGY_MANIPULATOR;
+                case "BERSERKER":
+                return ArchetypeID.BERSERKER;
+                case "MIXED MARTIAL ARTIST":
+                return ArchetypeID.MIXED_MARTIAL_ARTIST;
+                case "WEAPON SPECIALIST":
+                return ArchetypeID.WEAPON_SPECIALIST;
+                case "COMBAT SPECIALIST":
+                return ArchetypeID.COMBAT_SPECIALIST;
+        }
+            return ArchetypeID.NULL;
         }
     }
 }
