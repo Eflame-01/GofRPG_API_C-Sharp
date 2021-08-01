@@ -31,14 +31,10 @@ namespace GofRPG_API
                 Move moveThree = _moveDriver.GetMove(moveThreeName);
                 Move moveFour = _moveDriver.GetMove(moveFourName);
 
-                moveSet.AddMoveToBattleSlot(moveOne);
-                moveSet.AddMoveToList(moveOne);
-                moveSet.AddMoveToBattleSlot(moveTwo);
-                moveSet.AddMoveToList(moveTwo);
-                moveSet.AddMoveToBattleSlot(moveThree);
-                moveSet.AddMoveToList(moveThree);
-                moveSet.AddMoveToBattleSlot(moveFour);
-                moveSet.AddMoveToList(moveFour);
+                moveSet.AddMove(moveOne);
+                moveSet.AddMove(moveTwo);
+                moveSet.AddMove(moveThree);
+                moveSet.AddMove(moveFour);
             }
             return moveSet;
         }
