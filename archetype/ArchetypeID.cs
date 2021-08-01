@@ -12,6 +12,7 @@ namespace GofRPG_API{
         NATURE_MANIPULATOR,
         ENERGY_MANIPULATOR,
         WEAPON_SPECIALIST,
-        COMBAT_SPECIALIST
+        COMBAT_SPECIALIST,
+        NULL
     }
 }
