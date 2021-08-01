@@ -6,6 +6,15 @@ namespace GofRPG_API
 {
     public class MoveDriver : DatabaseDriver
     {
+            private String _regularMoveQuery = "SELECT primary_move_target, primary_move_accuracy, power_percent, recoil_damage_percent FROM primary_move INNER JOIN physical_move ON(primary_move.move_name = physical_move.move_name) INNER JOIN regular_move ON(primary_move.move_name = regular_move.move_name) WHERE primary_move.move_name = \"";
+            private String _priorityMoveQuery = "SELECT primary_move_target, primary_move_accuracy, power_percent, priority_level FROM primary_move INNER JOIN physical_move ON(primary_move.move_name = physical_move.move_name) INNER JOIN priority_move ON(primary_move.move_name = priority_move.move_name) WHERE primary_move.move_name = \"";
+            private String _counterMoveQuery = "SELECT primary_move_target, primary_move_accuracy, power_percent FROM primary_move INNER JOIN physical_move ON(primary_move.move_name = physical_move.move_name) INNER JOIN counter_move ON(primary_move.move_name = counter_move.move_name) WHERE primary_move.move_name = \"";
+            private String _knockoutMoveQuery = "SELECT primary_move_target, primary_move_accuracy FROM primary_move INNER JOIN knock_out_move ON(primary_move.move_name = knock_out_move.move_name) WHERE primary_move.move_name = \"";
+            private String _protectMoveQuery = "SELECT primary_move_target, primary_move_accuracy, protect_move_type, succession_percent FROM primary_move INNER JOIN protect_move ON(primary_move.move_name = protect_move.move_name) WHERE primary_move.move_name = \"";
+            private String _statChangingMoveQuery = "SELECT secondary_move_target, secondary_move_accuracy, is_side_effect, stat_one, stat_two, is_stat_one_boosting, is_stat_two_boosting, stat_one_percent, stat_two_percent FROM secondary_move INNER JOIN stat_changing_move ON(secondary_move.move_name = stat_changing_move.move_name) WHERE secondary_move.move_name = \"";
+            private String _statusChangingMoveQuery = "SELECT secondary_move_target, secondary_move_accuracy, is_side_effect, status_condition, burn_damage, poison_damage, poison_incrementer, stun_duration, stun_probability FROM secondary_move INNER JOIN status_changing_move ON(secondary_move.move_name = status_changing_move.move_name) WHERE secondary_move.move_name = \"";
+
+
         public Move GetMove(String name)
         {
             //If the Connection to the Database is close, open it
@@ -88,7 +97,7 @@ namespace GofRPG_API
             switch(typeTwo)
             {
                 case "STAT CHANGING":
-                SqlQuery = MakeMoveQuery("secondary_move_target, secondary_move_accuracy, is_side_effect, stat_one, stat_two, is_stat_one_boosting, is_stat_two_boosting, stat_one_percent, stat_two_percent", "move INNER JOIN secondary_move ON(move.move_name = secondary_move.move_name) INNER JOIN stat_changing_move ON(move.move_name = stat_changing_move.move_name)", name);
+                SqlQuery = _statChangingMoveQuery;
                 MySqlCommand = new MySqlCommand(SqlQuery, MySqlConnection);
                 MySqlDataReader = MySqlCommand.ExecuteReader();
                 if(MySqlDataReader.Read())
@@ -105,7 +114,7 @@ namespace GofRPG_API
                 break;
 
                 case "STATUS CHANGING":
-                SqlQuery = MakeMoveQuery("secondary_move_target, secondary_move_accuracy, is_side_effect, status_condition, burn_damage, poison_damage, poison_incrementer, stun_duration, stun_probability", "move INNER JOIN secondary_move ON(move.move_name = secondary_move.move_name) INNER JOIN status_changing_move ON(move.move_name = status_changing_move.move_name)", name);
+                SqlQuery = _statusChangingMoveQuery;
                 MySqlCommand = new MySqlCommand(SqlQuery, MySqlConnection);
                 MySqlDataReader = MySqlCommand.ExecuteReader();
                 if(MySqlDataReader.Read())
@@ -121,7 +130,7 @@ namespace GofRPG_API
             switch(typeOne)
             {
                 case "REGULAR":
-                SqlQuery = MakeMoveQuery("primary_move_target, primary_move_accuracy, power_percent, recoil_damage_percent", "move INNER JOIN primary_move ON(move.move_name = primary_move.move_name) INNER JOIN physical_move ON(move.move_name = physical_move.move_name) INNER JOIN regular_move ON(move.move_name = regular_move.move_name)", name);
+                SqlQuery = _regularMoveQuery;
                 MySqlCommand = new MySqlCommand(SqlQuery, MySqlConnection);
                 MySqlDataReader = MySqlCommand.ExecuteReader();
                 if(MySqlDataReader.Read())
