@@ -12,6 +12,7 @@ namespace GofRPG_API
             CharacterLevel = 1;
             CharacterCurrentXP = 0;
             CharacterLimitXP = 1;
+            CharacterMoveSet = new MoveSet();
             CharacterBaseStat = new BaseStat();
             CharacterBattleStatus = new BattleStatus();
             PlayerBag = new Bag();
