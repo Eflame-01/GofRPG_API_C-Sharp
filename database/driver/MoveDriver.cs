@@ -6,6 +6,8 @@ namespace GofRPG_API
 {
     public class MoveDriver : DatabaseDriver
     {
+
+            private String _findMoveQuery = "SELECT * FROM move WHERE move_name = \"";
             private String _regularMoveQuery = "SELECT primary_move_target, primary_move_accuracy, power_percent, recoil_damage_percent FROM primary_move INNER JOIN physical_move ON(primary_move.move_name = physical_move.move_name) INNER JOIN regular_move ON(primary_move.move_name = regular_move.move_name) WHERE primary_move.move_name = \"";
             private String _priorityMoveQuery = "SELECT primary_move_target, primary_move_accuracy, power_percent, priority_level FROM primary_move INNER JOIN physical_move ON(primary_move.move_name = physical_move.move_name) INNER JOIN priority_move ON(primary_move.move_name = priority_move.move_name) WHERE primary_move.move_name = \"";
             private String _counterMoveQuery = "SELECT primary_move_target, primary_move_accuracy, power_percent FROM primary_move INNER JOIN physical_move ON(primary_move.move_name = physical_move.move_name) INNER JOIN counter_move ON(primary_move.move_name = counter_move.move_name) WHERE primary_move.move_name = \"";
@@ -27,7 +29,7 @@ namespace GofRPG_API
             Move move = null;
 
             //Create the query that allows you to get the data of a specific move based on the name.
-            SqlQuery = "SELECT * FROM move WHERE move_name = '" + name + "'";
+            SqlQuery = _findMoveQuery + name + "\"";
 
             //Run the command and gather the data
             MySqlCommand = new MySqlCommand(SqlQuery, MySqlConnection);
@@ -97,29 +99,23 @@ namespace GofRPG_API
             switch(typeTwo)
             {
                 case "STAT CHANGING":
-                SqlQuery = _statChangingMoveQuery;
+                SqlQuery = _statChangingMoveQuery + name + "\"";
                 MySqlCommand = new MySqlCommand(SqlQuery, MySqlConnection);
                 MySqlDataReader = MySqlCommand.ExecuteReader();
                 if(MySqlDataReader.Read())
                 {
-                    String statOne = MySqlDataReader.GetString(3);
-                    String statTwo = MySqlDataReader.GetString(4);
-                    bool isStatOneBoosted = MySqlDataReader.GetBoolean(5);
-                    bool isStatTwoBoosted = MySqlDataReader.GetBoolean(6);
-                    double statOnePercent = MySqlDataReader.GetDouble(7);
-                    double statTwoPercent = MySqlDataReader.GetDouble(8);
-                    moveTwo = new StatChangingMove(name, description, MySqlDataReader.GetDouble(1), MySqlDataReader.GetString(0), level, energyPoints, energyPoints, MakeStatBoost(statOne, isStatOneBoosted, statOnePercent, statTwo, isStatTwoBoosted, statTwoPercent), MakeStatReduction(statOne, isStatOneBoosted, statOnePercent, statTwo, isStatTwoBoosted, statTwoPercent), MySqlDataReader.GetBoolean(2));
+                    moveTwo = MakeStatChangingMove(MySqlDataReader, null, name, description, level, archetype, energyPoints);
                     MySqlDataReader.Close();
                 }
                 break;
 
                 case "STATUS CHANGING":
-                SqlQuery = _statusChangingMoveQuery;
+                SqlQuery = _statusChangingMoveQuery + name + "\"";
                 MySqlCommand = new MySqlCommand(SqlQuery, MySqlConnection);
                 MySqlDataReader = MySqlCommand.ExecuteReader();
                 if(MySqlDataReader.Read())
                 {
-                    moveTwo = new StatusChangingMove(name, description, MySqlDataReader.GetDouble(1), MySqlDataReader.GetString(0), level, energyPoints, energyPoints, MakeStatusCondition(MySqlDataReader), MySqlDataReader.GetBoolean(2));
+                    moveTwo = MakeStatusChangingMove(MySqlDataReader, null, name, description, level, archetype, energyPoints);
                     MySqlDataReader.Close();
                 }
                 break;
@@ -130,142 +126,78 @@ namespace GofRPG_API
             switch(typeOne)
             {
                 case "REGULAR":
-                SqlQuery = _regularMoveQuery;
+                SqlQuery = _regularMoveQuery + name + "\"";
                 MySqlCommand = new MySqlCommand(SqlQuery, MySqlConnection);
                 MySqlDataReader = MySqlCommand.ExecuteReader();
                 if(MySqlDataReader.Read())
                 {
-                    if(moveTwo != null)
-                    {
-                        moveOne = new RegularMove(moveTwo, name, description, MySqlDataReader.GetDouble(1),  MySqlDataReader.GetString(0), level, energyPoints, energyPoints, MySqlDataReader.GetDouble(2), MySqlDataReader.GetDouble(3));
-                    }
-                    else
-                    {
-                        moveOne = new RegularMove(name,  description, MySqlDataReader.GetDouble(1), MySqlDataReader.GetString(0), level, energyPoints, energyPoints, MySqlDataReader.GetDouble(2), MySqlDataReader.GetDouble(3));
-                    }
+                    moveOne = MakeRegularMove(MySqlDataReader, moveTwo, name, description, level, archetype, energyPoints);
                     MySqlDataReader.Close();
                 }
                 break;
 
                 case "COUNTER":
-                SqlQuery = MakeMoveQuery("primary_move_target, primary_move_accuracy, power_percent", "move INNER JOIN physical_move ON(move.move_name = physical_move.move_name) INNER JOIN counter_move ON(move.move_name = counter_move.move_name)", name);
+                SqlQuery = _counterMoveQuery + name + "\"";
                 MySqlCommand = new MySqlCommand(SqlQuery, MySqlConnection);
                 MySqlDataReader = MySqlCommand.ExecuteReader();
                 if(MySqlDataReader.Read())
                 {
-                    if(moveTwo != null)
-                    {
-                        moveOne = new CounterMove(moveTwo, name, description, MySqlDataReader.GetDouble(2), MySqlDataReader.GetDouble(0), MySqlDataReader.GetString(0), level, energyPoints, energyPoints);
-                    }
-                    else
-                    {
-                        moveOne = new CounterMove(name, description, MySqlDataReader.GetDouble(2), MySqlDataReader.GetDouble(0), MySqlDataReader.GetString(0), level, energyPoints, energyPoints);
-                    }
+                    moveOne = MakeCounterMove(MySqlDataReader, moveTwo, name, description, level, archetype, energyPoints);
                     MySqlDataReader.Close();
                 }
                 break;
 
                 case "PRIORITY":
-                SqlQuery = MakeMoveQuery("primary_move_target, primary_move_accuracy, power_percent, priority_level", "move INNER JOIN physical_move ON(move.move_name = physical_move.move_name) INNER JOIN priority_move ON(move.move_name = priority_move.move_name)", name);
+                SqlQuery = _priorityMoveQuery + name + "\"";
                 MySqlCommand = new MySqlCommand(SqlQuery, MySqlConnection);
                 MySqlDataReader = MySqlCommand.ExecuteReader();
                 if(MySqlDataReader.Read())
                 {
-                    int priorityLevel = MySqlDataReader.GetInt32(3);
-                    if(moveTwo != null)
-                    {
-                        switch(priorityLevel)
-                        {
-                            case 1:
-                            moveOne = new Priority1(moveTwo, name, description, MySqlDataReader.GetDouble(1), MySqlDataReader.GetString(0), level, energyPoints, energyPoints, MySqlDataReader.GetDouble(2));
-                            break;
-                            case 2:
-                            moveOne = new Priority2(moveTwo, name, description, MySqlDataReader.GetDouble(1), MySqlDataReader.GetString(0), level, energyPoints, energyPoints, MySqlDataReader.GetDouble(2));
-                            break;
-                            case 3:
-                            moveOne = new Priority3(moveTwo, name, description, MySqlDataReader.GetDouble(1), MySqlDataReader.GetString(0), level, energyPoints, energyPoints, MySqlDataReader.GetDouble(2));
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        switch(priorityLevel)
-                        {
-                            case 1:
-                            moveOne = new Priority1(name, description, MySqlDataReader.GetDouble(1), MySqlDataReader.GetString(0), level, energyPoints, energyPoints, MySqlDataReader.GetDouble(2));
-                            break;
-                            case 2:
-                            moveOne = new Priority2(name, description, MySqlDataReader.GetDouble(1), MySqlDataReader.GetString(0), level, energyPoints, energyPoints, MySqlDataReader.GetDouble(2));
-                            break;
-                            case 3:
-                            moveOne = new Priority3(name, description, MySqlDataReader.GetDouble(1), MySqlDataReader.GetString(0), level, energyPoints, energyPoints, MySqlDataReader.GetDouble(2));
-                            break;
-                        }
-                    }
+                    moveOne = MakePriorityMove(MySqlDataReader, moveTwo, name, description, level, archetype, energyPoints);
                     MySqlDataReader.Close();
                 }
                 break;
 
                 case "PROTECT":
-                SqlQuery = MakeMoveQuery("primary_move_target, primary_move_accuracy, protect_move_type, succession_percent", "move INNER JOIN primary_move ON(move.move_name = primary_move.move_name) INNER JOIN protect_move ON(move.move_name = protect_move.move_name)", name);
+                SqlQuery = _protectMoveQuery + name + "\"";
                 MySqlCommand = new MySqlCommand(SqlQuery, MySqlConnection);
                 MySqlDataReader = MySqlCommand.ExecuteReader();
                 if(MySqlDataReader.Read())
                 {
-                    if(moveTwo != null)
-                    {
-                        moveOne = new ProtectMove(moveTwo, name, description, MySqlDataReader.GetDouble(1), MySqlDataReader.GetString(0), level, energyPoints, energyPoints, MakeProtectionStatus(MySqlDataReader.GetString(2)), MySqlDataReader.GetDouble(3));
-                    }
-                    else
-                    {
-                        moveOne = new ProtectMove(name, description, MySqlDataReader.GetDouble(1), MySqlDataReader.GetString(0), level, energyPoints, energyPoints, MakeProtectionStatus(MySqlDataReader.GetString(2)), MySqlDataReader.GetDouble(3));
-                    }
+                    moveOne = MakeProtectMove(MySqlDataReader, moveTwo, name, description, level, archetype, energyPoints);
                     MySqlDataReader.Close();
                 }
                 break;
 
                 case "KNOCK OUT":
-                SqlQuery = MakeMoveQuery("primary_move_target, primary_move_accuracy", "move INNER JOIN primary_move ON(move.move_name = primary_move.move_name) INNER JOIN knock_out_move ON(move.move_name = knock_out_move.move_name)", name);
+                SqlQuery = _knockoutMoveQuery + name + "\"";
                 MySqlCommand = new MySqlCommand(SqlQuery, MySqlConnection);
                 MySqlDataReader = MySqlCommand.ExecuteReader();
                 if(MySqlDataReader.Read())
                 {
-                    if(moveTwo != null)
-                    {
-                        moveOne = new KnockoutMove(moveTwo, name, description, MySqlDataReader.GetDouble(1), MySqlDataReader.GetString(0), level, energyPoints, energyPoints);
-                    }
-                    else
-                    {
-                        moveOne = new KnockoutMove(name, description, MySqlDataReader.GetDouble(1), MySqlDataReader.GetString(0), level, energyPoints, energyPoints);
-                    }
+                    moveOne = MakeKnockoutMove(MySqlDataReader, moveTwo, name, description, level, archetype, energyPoints);
                     MySqlDataReader.Close();
                 }
                 break;
 
                 case "STAT CHANGING":
-                SqlQuery = MakeMoveQuery("secondary_move_target, secondary_move_accuracy, is_side_effect, stat_one, stat_two, is_stat_one_boosting, is_stat_two_boosting, stat_one_percent, stat_two_percent", "move INNER JOIN secondary_move ON (move.move_name = secondary_move.move_name) INNER JOIN stat_changing_move ON (move.move_name = stat_changing_move.move_name)", name);
+                SqlQuery = _statChangingMoveQuery + name + "\"";
                 MySqlCommand = new MySqlCommand(SqlQuery, MySqlConnection);
                 MySqlDataReader = MySqlCommand.ExecuteReader();
                 if(MySqlDataReader.Read())
                 {
-                    String statOne = MySqlDataReader.GetString(3);
-                    String statTwo = MySqlDataReader.GetString(4);
-                    bool isStatOneBoosted = MySqlDataReader.GetBoolean(5);
-                    bool isStatTwoBoosted = MySqlDataReader.GetBoolean(6);
-                    double statOnePercent = MySqlDataReader.GetDouble(7);
-                    double statTwoPercent = MySqlDataReader.GetDouble(8);
-                    moveTwo = new StatChangingMove(name, description, MySqlDataReader.GetDouble(1), MySqlDataReader.GetString(0), level, energyPoints, energyPoints, MakeStatBoost(statOne, isStatOneBoosted, statOnePercent, statTwo, isStatTwoBoosted, statTwoPercent), MakeStatReduction(statOne, isStatOneBoosted, statOnePercent, statTwo, isStatTwoBoosted, statTwoPercent), MySqlDataReader.GetBoolean(2));
+                    moveOne = MakeStatChangingMove(MySqlDataReader, null, name, description, level, archetype, energyPoints);
                     MySqlDataReader.Close();
                 }
                 break;
 
                 case "STATUS CHANGING":
-                SqlQuery = MakeMoveQuery("secondary_move_target, secondary_move_accuracy, is_side_effect, status_condition, burn_damage, poison_damage, poison_incrementer, stun_duration, stun_probability", "move INNER JOIN secondary_move ON (move.move_name = secondary_move.move_name) INNER JOIN status_changing_move ON (move.move_name = status_changing_move.move_name)", name);
+                SqlQuery = _statusChangingMoveQuery + name + "\"";
                 MySqlCommand = new MySqlCommand(SqlQuery, MySqlConnection);
                 MySqlDataReader = MySqlCommand.ExecuteReader();
                 if(MySqlDataReader.Read())
                 {
-                    moveOne = new StatusChangingMove(name, description, MySqlDataReader.GetDouble(1), MySqlDataReader.GetString(0), level, energyPoints, energyPoints, MakeStatusCondition(MySqlDataReader), MySqlDataReader.GetBoolean(2));
+                    moveOne = MakeStatusChangingMove(MySqlDataReader, null, name, description, level, archetype, energyPoints);
                     MySqlDataReader.Close();
                 }
                 break;
@@ -274,9 +206,180 @@ namespace GofRPG_API
             return moveOne;
         }
 
-        private String MakeMoveQuery(String attributes, String location, String name)
+        private Move MakeCounterMove(MySqlDataReader reader, Move moveTwo, String name, String description, int level, String archetype, int energyPoints)
         {
-            return "SELECT " + attributes + " FROM " + location + " WHERE move.move_name = '" + name + "'";
+            //primary_move_target, primary_move_accuracy, power_percent
+            String primaryMoveTarget = reader.GetString("primary_move_target");
+            double primaryMoveAccuracy = reader.GetDouble("primary_move_accuracy");
+            double powerPercent = reader.GetDouble("power_percent");
+            Move move = null;
+
+            if(moveTwo == null)
+            {
+                move = new CounterMove(name, description, powerPercent, primaryMoveAccuracy, primaryMoveTarget, level, energyPoints, energyPoints);
+            }
+            else
+            {
+                move = new CounterMove(moveTwo, name, description, powerPercent, primaryMoveAccuracy, primaryMoveTarget, level, energyPoints, energyPoints);
+            }
+            return move;
+        }
+
+        private Move MakeKnockoutMove(MySqlDataReader reader, Move moveTwo, String name, String description, int level, String archetype, int energyPoints)
+        {
+            // primary_move_target, primary_move_accuracy
+            String primaryMoveTarget = reader.GetString("primary_move_target");
+            double primaryMoveAccuracy = reader.GetDouble("primary_move_accuracy");
+            Move move = null;
+
+            if(moveTwo == null)
+            {
+                move = new KnockoutMove(name, description, primaryMoveAccuracy, primaryMoveTarget, level, energyPoints, energyPoints);
+            }
+            else
+            {
+                move = new KnockoutMove(moveTwo, name, description, primaryMoveAccuracy, primaryMoveTarget, level, energyPoints, energyPoints);
+            }
+            return null;
+        }
+
+        private Move MakePriorityMove(MySqlDataReader reader, Move moveTwo, String name, String description, int level, String archetype, int energyPoints)
+        {
+            //primary_move_target, primary_move_accuracy, power_percent, priority_level
+            String primaryMoveTarget = MySqlDataReader.GetString("primary_move_target");
+            double primaryMoveAccuracy = MySqlDataReader.GetDouble("primary_move_accuracy");
+            double powerPercent = MySqlDataReader.GetDouble("power_percent");
+            int priorityLevel = MySqlDataReader.GetInt32("priority_level");
+            Move move = null;
+
+            if(moveTwo == null)
+            {
+                move = new PriorityMove(name, description, primaryMoveAccuracy, primaryMoveTarget, level, energyPoints, energyPoints, powerPercent, priorityLevel);
+            }
+            else
+            {
+                move = new PriorityMove(moveTwo, name, description, primaryMoveAccuracy, primaryMoveTarget, level, energyPoints, energyPoints, powerPercent, priorityLevel);
+            }
+            return move;
+        }
+
+        private Move MakeProtectMove(MySqlDataReader reader, Move moveTwo, String name, String description, int level, String archetype, int energyPoints)
+        {
+            // primary_move_target, primary_move_accuracy, protect_move_type, succession_percent 
+            String primaryMoveTarget = reader.GetString("primary_move_target");
+            double primaryMoveAccuracy = reader.GetDouble("primary_move_accuracy");
+            ProtectionStatus protectMoveType = MakeProtectionStatus(reader.GetString("protect_move_type"));
+            double successionPercent = reader.GetDouble("succession_percent");
+            Move move = null;
+
+            if(moveTwo == null)
+            {
+                move = new ProtectMove(name, description, primaryMoveAccuracy, primaryMoveTarget, level, energyPoints, energyPoints, protectMoveType, successionPercent);
+            }
+            else
+            {
+                move = new ProtectMove(moveTwo, name, description, primaryMoveAccuracy, primaryMoveTarget, level, energyPoints, energyPoints, protectMoveType, successionPercent);
+            }
+
+            return move;
+        }
+
+        private Move MakeRegularMove(MySqlDataReader reader, Move moveTwo, String name, String description, int level, String archetype, int energyPoints)
+        {
+            // primary_move_target, primary_move_accuracy, power_percent, recoil_damage_percent
+            String primaryMoveTarget = reader.GetString("primary_move_target");
+            double primaryMoveAccuracy = reader.GetDouble("primary_move_accuracy");
+            double powerPercent = reader.GetDouble("power_percent");
+            double recoilDamagePercent = reader.GetDouble("recoil_damage_percent");
+            Move move = null;
+
+            if(moveTwo == null)
+            {
+                move = new RegularMove(name, description, primaryMoveAccuracy, primaryMoveTarget, level, energyPoints, energyPoints, powerPercent, recoilDamagePercent);
+            }
+            else
+            {
+                move = new RegularMove(moveTwo, name, description, primaryMoveAccuracy, primaryMoveTarget, level, energyPoints, energyPoints, powerPercent, recoilDamagePercent);
+            }
+
+            return move;
+        }
+
+        private Move MakeStatChangingMove(MySqlDataReader reader, Move moveTwo, String name, String description, int level, String archetype, int energyPoints)
+        {
+            String secondaryMoveTarget = reader.GetString("secondary_move_target");
+            double secondaryMoveAccuracy = reader.GetDouble("secondary_move_accuracy");
+            bool isSideEffect = reader.GetBoolean("is_side_effect");
+            String statOne = reader.GetString("stat_one");
+            String statTwo = reader.GetString("stat_two");
+            bool isStatOneBoosted = reader.GetBoolean("is_stat_one_boosting");
+            bool isStatTwoBoosted = reader.GetBoolean("is_stat_two_boosting");
+            double statOnePercent = reader.GetDouble("stat_one_percent");
+            double statTwoPercent = reader.GetDouble("stat_two_percent");
+            Move move= new StatChangingMove(name, description, secondaryMoveAccuracy, secondaryMoveTarget, level, energyPoints, energyPoints, MakeStat(statOne, isStatOneBoosted, statOnePercent), MakeStat(statTwo, isStatTwoBoosted, statTwoPercent), isSideEffect);   
+            return move;
+        }
+
+        private Move MakeStatusChangingMove(MySqlDataReader reader, Move moveTwo, String name, String description, int level, String archetype, int energyPoints)
+        {
+            // secondary_move_target, secondary_move_accuracy, is_side_effect, status_condition, burn_damage, poison_damage, poison_incrementer, stun_duration, stun_probability
+            String secondaryMoveTarget = MySqlDataReader.GetString("secondary_move_target");
+            double secondaryMoveAccuracy = MySqlDataReader.GetDouble("secondary_move_accuracy");
+            bool isSideEffect = MySqlDataReader.GetBoolean("is_side_effect");
+            String statusConditionText = MySqlDataReader.GetString("status_condition");
+            double burnDamage = MySqlDataReader.GetDouble("burn_damage");
+            double poisonDamage = MySqlDataReader.GetDouble("poison_damage");
+            double poisonIncrementer = MySqlDataReader.GetDouble("poison_incrementer");
+            int stunDuration = MySqlDataReader.GetInt32("stun_duration");
+            double stunProbability = MySqlDataReader.GetDouble("stun_probability");
+            StatusCondition statusCondition = MakeStatusCondition(statusConditionText, burnDamage, poisonDamage, poisonIncrementer, stunDuration, stunProbability);
+            Move move = new StatusChangingMove(name, description, secondaryMoveAccuracy, secondaryMoveTarget, level, energyPoints, energyPoints, statusCondition, isSideEffect);
+            return null;
+        }
+
+        private StatusCondition MakeStatusCondition(String statusConditionName, double burnDamage, double poisonDamage, double poisonIncrementer, int stunDuration, double stunProbability)
+        {
+            StatusCondition statusCondition = null;
+            switch(statusConditionName)
+            {
+                case "BURN":
+                if(burnDamage <= 0)
+                {
+                    statusCondition = new Burn();
+                }
+                else
+                {
+                    statusCondition = new Burn(burnDamage);
+                }
+                break;
+                case "POISON":
+                if(poisonDamage <= 0 || poisonIncrementer <= 0)
+                {
+                    statusCondition = new Poison();
+                }
+                else
+                {
+                    statusCondition = new Poison(poisonDamage, poisonIncrementer);
+                }
+                break;
+                case "STUN":
+                if(stunDuration <= 0 || stunProbability <= 0)
+                {
+                    statusCondition = new Stun();
+                }
+                else
+                {
+                    statusCondition = new Stun(stunDuration, stunProbability);
+                }
+                break;
+                case "FLINCH":
+                statusCondition = new Flinch();
+                break;
+                default:
+                statusCondition = null;
+                break;
+            }
+            return statusCondition;
         }
 
         private StatusCondition MakeStatusCondition(MySqlDataReader reader)
@@ -284,52 +387,43 @@ namespace GofRPG_API
             StatusCondition statusCondition = null;
             String name = reader.GetString(3);
 
-            double burnDamage = 0;
-            double poisonDamage = 0;
-            double poisonIncrementer = 0;
-            int stunDuration = 0;
-            double stunProbability = 0;
-
-            try{
-                burnDamage = reader.GetDouble(4);
-            }
-            catch
-            {
-            }
-            try{
-                poisonDamage = reader.GetDouble(5);
-            }
-            catch
-            {
-            }
-            try{
-                poisonIncrementer = reader.GetDouble(6);
-            }
-            catch
-            {
-            }
-            try{
-                stunDuration = reader.GetInt32(7);
-            }
-            catch
-            {
-            }
-            try
-            {
-                stunProbability = reader.GetDouble(8);
-            }
-            catch
-            {
-            }
+            double burnDamage = reader.GetDouble(4);
+            double poisonDamage = reader.GetDouble(5);
+            double poisonIncrementer = reader.GetDouble(6);
+            int stunDuration = reader.GetInt32(7);
+            double stunProbability = reader.GetDouble(8);
 
             switch(name)
             {
                 case "BURN":
-                return new Burn(burnDamage);
+                if(burnDamage <= 0)
+                {
+                    statusCondition = new Burn();
+                }
+                else
+                {
+                    statusCondition = new Burn(burnDamage);
+                }
+                break;
                 case "POISON":
-                return new Poison(poisonDamage, poisonIncrementer);
+                if(poisonDamage <= 0 || poisonDamage <= 0)
+                {
+                    statusCondition = new Poison();
+                }
+                else
+                {
+                    statusCondition = new Poison(poisonDamage, poisonIncrementer);
+                }
+                break;
                 case "STUN":
-                return new Stun(stunDuration, stunProbability);
+                if(stunDuration <= 0 || stunProbability <= 0)
+                {
+                    statusCondition = new Stun();
+                }
+                else{
+                    statusCondition = new Stun(stunDuration, stunProbability);
+                }
+                break;
                 case "FLINCH":
                 return new Flinch();
             }

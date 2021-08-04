@@ -11,43 +11,94 @@ namespace GofRPG_API
         protected MySqlConnection MySqlConnection {get; private set;}
         protected MySqlCommand MySqlCommand {get; set;}
         protected MySqlDataReader MySqlDataReader {get; set;}
+
+        //Constructor
         public DatabaseDriver()
         {
             InitDriver();
         }
+
         protected void InitDriver(){
             String connectionString = @_files.DecryptFile();
-            // _files.EncryptFile();
+            // _files.EncryptFile(); TODO: i forogt why this is commented out, test this out first
             MySqlConnection = new MySqlConnection(connectionString);
             MySqlConnection.Open();
         }
 
-        protected Stat MakeStatBoost(String statOne, bool isStatOneBoosted, double statOnePercent, String statTwo, bool isStatTwoBoosted, double statTwoPercent)
+        protected Stat MakeStat(String name, bool isStatBoosted, double statChangePercent)
         {
-            Stat statBoost = null;
-            if(isStatOneBoosted)
-            {
-                statBoost = Stat.GetStat(statOne, statOnePercent, 0);
-            }
-            else if(isStatTwoBoosted)
-            {
-                statBoost = Stat.GetStat(statTwo, statTwoPercent, 0);
-            }
-            return statBoost;
-        }
+            Stat stat = null;
 
-        protected Stat MakeStatReduction(String statOne, bool isStatOneBoosted, double statOnePercent, String statTwo, bool isStatTwoBoosted, double statTwoPercent)
-        {
-            Stat statReduction = null;
-            if(!isStatOneBoosted)
+            switch(name)
             {
-                statReduction = Stat.GetStat(statOne, 0, statOnePercent);
+                case "ATK":
+                if(statChangePercent <= 0){
+                    stat = new Attack();
+                    break;
+                }
+                if(isStatBoosted)
+                {
+                    stat = new Attack(statChangePercent, 0);
+                }
+                else{
+                    stat = new Attack(0, statChangePercent);
+                }
+                break;
+                case "DEF":
+                if(statChangePercent <= 0){
+                    stat = new Defense();
+                    break;
+                }
+                if(isStatBoosted)
+                {
+                    stat = new Defense(statChangePercent, 0);
+                }
+                else{
+                    stat = new Defense(0, statChangePercent);
+                }
+                break;
+                case "EVA":
+                if(statChangePercent <= 0){
+                    stat = new Evasion();
+                    break;
+                }
+                if(isStatBoosted)
+                {
+                    stat = new Evasion(statChangePercent, 0);
+                }
+                else{
+                    stat = new Evasion(0, statChangePercent);
+                }
+                break;
+                case "SPD":
+                if(statChangePercent <= 0){
+                    stat = new Speed();
+                    break;
+                }
+                if(isStatBoosted)
+                {
+                    stat = new Speed(statChangePercent, 0);
+                }
+                else{
+                    stat = new Speed(0, statChangePercent);
+                }
+                break;
+                case "HP":
+                if(statChangePercent <= 0){
+                    stat = new HitPoints();
+                    break;
+                }
+                if(isStatBoosted)
+                {
+                    stat = new HitPoints(statChangePercent, 0);
+                }
+                else{
+                    stat = new HitPoints(0, statChangePercent);
+                }
+                break;
             }
-            else if(!isStatTwoBoosted)
-            {
-                statReduction = Stat.GetStat(statTwo, 0, statTwoPercent);
-            }
-            return statReduction;
+
+            return stat;
         }
     }
 }
