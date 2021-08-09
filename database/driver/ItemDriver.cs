@@ -7,7 +7,6 @@ namespace GofRPG_API
     {
         private String foodItemQuery = "heal_amount FROM food_item WHERE item_name = \"";
         private String healingItemQuery = "SELECT heal_percent FROM healing_item WHERE item_name = \"";
-        private String keyItemQuery = "SELECT item_name, item_description FROM item WHERE item_name = \""; //TODO: might not be needed
         private String medicalItemQuery = "SELECT status_cure, heal_amount FROM stat_changing_item WHERE item_name = \"";
         private String priorityItemQuery = "SELECT priority_percentage FROM priority_item  WHERE item_name = \"";
         private String statChangingItemQuery = "SELECT stat_one, stat_two, is_stat_one_boosted, is_stat_two_boosted, stat_one_percentage, stat_two_percentage FROM stat_changing_item WHERE item_name = \"";

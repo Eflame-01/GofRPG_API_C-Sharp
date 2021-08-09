@@ -1,14 +1,18 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.1",
-    "signature": "48cd63ece904fdac0e249746192aa6682af23030"
+    "signature": ""
   },
   "compilationOptions": {
     "defines": [
       "TRACE",
       "DEBUG",
       "NETCOREAPP",
-      "NETCOREAPP2_1"
+      "NETCOREAPP2_1",
+      "NETCOREAPP1_0_OR_GREATER",
+      "NETCOREAPP1_1_OR_GREATER",
+      "NETCOREAPP2_0_OR_GREATER",
+      "NETCOREAPP2_1_OR_GREATER"
     ],
     "languageVersion": "latest",
     "platform": "",
@@ -423,12 +427,6 @@
         }
       },
       "System.Security.Cryptography.Cng/4.5.0": {
-        "runtimeTargets": {
-          "runtime/win/lib/_._": {
-            "rid": "win",
-            "assetType": "runtime"
-          }
-        },
         "compile": {
           "ref/netcoreapp2.1/System.Security.Cryptography.Cng.dll": {}
         }

@@ -8,7 +8,7 @@ namespace GofRPG_API
         public double SuccessionRate {get; set;}
         public double OriginalFlinchProbability {get; set;}
 
-        public PriorityMove(Move secondaryMove, String name, String description, double accuracy, String target, int level, int energyPoints, int maxEnergyPoints, double powerPercent, int priorityLevel)
+        public PriorityMove(Move secondaryMove, String name, String description, double accuracy, String target, int level, ArchetypeID moveArchetype, int energyPoints, int maxEnergyPoints, double powerPercent, int priorityLevel)
         {
             SecondaryMove = secondaryMove;
             MoveName = name;
@@ -22,7 +22,7 @@ namespace GofRPG_API
             AdjustPriorityMove(priorityLevel);
         }
 
-        public PriorityMove(String name, String description, double accuracy, String target, int level, int energyPoints, int maxEnergyPoints, double powerPercent, int priorityLevel)
+        public PriorityMove(String name, String description, double accuracy, String target, int level, ArchetypeID moveArchetype, int energyPoints, int maxEnergyPoints, double powerPercent, int priorityLevel)
         {
             MoveName = name;
             MoveDescription = description;

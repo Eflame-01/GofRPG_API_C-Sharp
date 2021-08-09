@@ -18,7 +18,7 @@ namespace GofRPG_API
             SetCharacterType(type);
             CharacterID = id;
         }
-        public void SetCharacterType(string type)
+        private void SetCharacterType(string type)
         {
             if(type.Equals("ALLY") || type.Equals("ENEMY") || type.Equals("STRANGER"))
             {

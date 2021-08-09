@@ -10,7 +10,12 @@ namespace GofRPG_API
             {
                 return 0;
             }
-            int attack = (int)(user.CharacterBaseStat.Atk * MovePowerPercent);
+            double newMovePowerPercent = MovePowerPercent;
+            if(!user.CharacterArchetype.MainArchetypeName.Equals(MoveArchetype))
+            {
+                newMovePowerPercent = MovePowerPercent * 0.90;
+            }
+            int attack = (int)(user.CharacterBaseStat.Atk * newMovePowerPercent);
             int defense = target.CharacterBaseStat.Def;
             int damage = attack - defense;
             if(damage < 1)

@@ -28,7 +28,11 @@ namespace GofRPG_API
                 Archetype archetype = Archetype.GetArchetype(MySqlDataReader.GetString(4));
                 int gold = MySqlDataReader.GetInt32(5);
                 int level = MySqlDataReader.GetInt32(6);
-                Item item = _itemDriver.GetItem(MySqlDataReader.GetString(7));
+                Item item = null;
+                if(!MySqlDataReader.IsDBNull(7))
+                {
+                    item = _itemDriver.GetItem(MySqlDataReader.GetString(7));
+                }
                 MoveSet moveSet = _moveSetDriver.GetMoveSet(characterID);
                 BaseStat baseStat = _baseStatDriver.GetBaseStat(characterID);
 
@@ -85,20 +89,15 @@ namespace GofRPG_API
 
             if(MySqlDataReader.Read())
             {
-                String moveOneName = MySqlDataReader.GetString(1);
-                String moveTwoName = MySqlDataReader.GetString(2);
-                String moveThreeName = MySqlDataReader.GetString(3);
-                String moveFourName = MySqlDataReader.GetString(4);
-
-                Move moveOne = _moveDriver.GetMove(moveOneName);
-                Move moveTwo = _moveDriver.GetMove(moveTwoName);
-                Move moveThree = _moveDriver.GetMove(moveThreeName);
-                Move moveFour = _moveDriver.GetMove(moveFourName);
-
-                moveSet.AddMove(moveOne);
-                moveSet.AddMove(moveTwo);
-                moveSet.AddMove(moveThree);
-                moveSet.AddMove(moveFour);
+                for(int i = 1; i <= 4; i++)
+                {
+                    if(!MySqlDataReader.IsDBNull(i))
+                    {
+                        String moveName = MySqlDataReader.GetString(i);
+                        Move move = _moveDriver.GetMove(moveName);
+                        moveSet.AddMove(move);
+                    }
+                }
             }
             return moveSet;
         }

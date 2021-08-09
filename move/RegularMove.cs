@@ -5,7 +5,7 @@ namespace GofRPG_API
     public class RegularMove : PhysicalMove
     {
         public double RecoilDamagePercent {get; set;}
-        public RegularMove(Move secondaryMove, String name, String description, double accuracy, String target, int level, int energyPoints, int maxEnergyPoints, double powerPercent, double recoildDamagePercent)
+        public RegularMove(Move secondaryMove, String name, String description, double accuracy, String target, int level, ArchetypeID moveArchetype, int energyPoints, int maxEnergyPoints, double powerPercent, double recoildDamagePercent)
         {
             SecondaryMove = secondaryMove;
             MoveName = name;
@@ -19,7 +19,7 @@ namespace GofRPG_API
             MovePowerPercent = powerPercent;
             MoveType = "REGULAR";
         }
-        public RegularMove(String name, String description, double accuracy, String target, int level, int energyPoints, int maxEnergyPoints, double powerPercent, double recoildDamagePercent)
+        public RegularMove(String name, String description, double accuracy, String target, int level, ArchetypeID moveArchetype, int energyPoints, int maxEnergyPoints, double powerPercent, double recoildDamagePercent)
         {
             MoveName = name;
             MoveDescription = description;

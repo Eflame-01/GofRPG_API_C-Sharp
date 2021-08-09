@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System;
+
 
 namespace GofRPG_API
 {
@@ -65,7 +67,7 @@ namespace GofRPG_API
         }
         private void AddMoveToBattleSlot(Move move)
         {
-            if(BattleMoves.GetLength(1) == BattleMoves.Length || IsMoveInBattleSlot(move))
+            if(IsMoveInBattleSlot(move))
             {
                 return;
             }

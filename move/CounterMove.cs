@@ -4,7 +4,7 @@ namespace GofRPG_API
 {
   public class CounterMove : PhysicalMove
   {
-    public CounterMove(Move secondaryMove, String name, String description, double accuracy, double powerPercent, String target, int level, int energyPoints, int maxEnergyPoints)
+    public CounterMove(Move secondaryMove, String name, String description, double accuracy, double powerPercent, String target, int level, ArchetypeID moveArchetype, int energyPoints, int maxEnergyPoints)
     {
       SecondaryMove = secondaryMove;
       MoveName = name;
@@ -17,7 +17,7 @@ namespace GofRPG_API
       MovePowerPercent = powerPercent;
       MoveType = "COUNTER";
     }
-    public CounterMove(String name, String description, double powerPercent, double accuracy, String target, int level, int energyPoints, int maxEnergyPoints)
+    public CounterMove(String name, String description, double powerPercent, double accuracy, String target, int level, ArchetypeID moveArchetype, int energyPoints, int maxEnergyPoints)
     {
       MoveName = name;
       MoveDescription = description;  

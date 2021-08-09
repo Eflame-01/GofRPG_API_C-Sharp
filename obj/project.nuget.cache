@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "MiEFcTZS1OjdNYOgWQ94mciVM92elYeQWwJQOO/qdRagrmy8a6J3XU0mjSv9jwIQ0m+M8POHCZHnRE8tQrocWQ==",
+  "dgSpecHash": "jbNO/dAYJpMUOFEfCmFyEHKwxEWPeL0JSEdAhC8Noh07+QvnTcuEVkZcwF0/LM8i2kUggRbMi93KKvPfrW1Zcw==",
   "success": true,
-  "projectFilePath": "c:\\Users\\esero\\OneDrive\\Documents\\GitHub\\GofRPG_API\\GofRPG_API.csproj",
+  "projectFilePath": "C:\\Users\\esero\\OneDrive\\Documents\\GitHub\\GofRPG_API\\GofRPG_API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\esero\\.nuget\\packages\\bouncycastle.netcore\\1.8.5\\bouncycastle.netcore.1.8.5.nupkg.sha512",
     "C:\\Users\\esero\\.nuget\\packages\\google.protobuf\\3.11.4\\google.protobuf.3.11.4.nupkg.sha512",

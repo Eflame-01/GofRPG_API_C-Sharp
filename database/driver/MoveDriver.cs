@@ -212,15 +212,16 @@ namespace GofRPG_API
             String primaryMoveTarget = reader.GetString("primary_move_target");
             double primaryMoveAccuracy = reader.GetDouble("primary_move_accuracy");
             double powerPercent = reader.GetDouble("power_percent");
+            ArchetypeID archetypeID = Archetype.GetArchetypeID(archetype);
             Move move = null;
 
             if(moveTwo == null)
             {
-                move = new CounterMove(name, description, powerPercent, primaryMoveAccuracy, primaryMoveTarget, level, energyPoints, energyPoints);
+                move = new CounterMove(name, description, powerPercent, primaryMoveAccuracy, primaryMoveTarget, level, archetypeID, energyPoints, energyPoints);
             }
             else
             {
-                move = new CounterMove(moveTwo, name, description, powerPercent, primaryMoveAccuracy, primaryMoveTarget, level, energyPoints, energyPoints);
+                move = new CounterMove(moveTwo, name, description, powerPercent, primaryMoveAccuracy, primaryMoveTarget, level, archetypeID, energyPoints, energyPoints);
             }
             return move;
         }
@@ -250,15 +251,16 @@ namespace GofRPG_API
             double primaryMoveAccuracy = MySqlDataReader.GetDouble("primary_move_accuracy");
             double powerPercent = MySqlDataReader.GetDouble("power_percent");
             int priorityLevel = MySqlDataReader.GetInt32("priority_level");
+            ArchetypeID archetypeID = Archetype.GetArchetypeID(archetype);
             Move move = null;
 
             if(moveTwo == null)
             {
-                move = new PriorityMove(name, description, primaryMoveAccuracy, primaryMoveTarget, level, energyPoints, energyPoints, powerPercent, priorityLevel);
+                move = new PriorityMove(name, description, primaryMoveAccuracy, primaryMoveTarget, level, archetypeID, energyPoints, energyPoints, powerPercent, priorityLevel);
             }
             else
             {
-                move = new PriorityMove(moveTwo, name, description, primaryMoveAccuracy, primaryMoveTarget, level, energyPoints, energyPoints, powerPercent, priorityLevel);
+                move = new PriorityMove(moveTwo, name, description, primaryMoveAccuracy, primaryMoveTarget, level, archetypeID, energyPoints, energyPoints, powerPercent, priorityLevel);
             }
             return move;
         }
@@ -291,15 +293,16 @@ namespace GofRPG_API
             double primaryMoveAccuracy = reader.GetDouble("primary_move_accuracy");
             double powerPercent = reader.GetDouble("power_percent");
             double recoilDamagePercent = reader.GetDouble("recoil_damage_percent");
+            ArchetypeID archetypeID = Archetype.GetArchetypeID(archetype);
             Move move = null;
 
             if(moveTwo == null)
             {
-                move = new RegularMove(name, description, primaryMoveAccuracy, primaryMoveTarget, level, energyPoints, energyPoints, powerPercent, recoilDamagePercent);
+                move = new RegularMove(name, description, primaryMoveAccuracy, primaryMoveTarget, level, archetypeID, energyPoints, energyPoints, powerPercent, recoilDamagePercent);
             }
             else
             {
-                move = new RegularMove(moveTwo, name, description, primaryMoveAccuracy, primaryMoveTarget, level, energyPoints, energyPoints, powerPercent, recoilDamagePercent);
+                move = new RegularMove(moveTwo, name, description, primaryMoveAccuracy, primaryMoveTarget, level, archetypeID, energyPoints, energyPoints, powerPercent, recoilDamagePercent);
             }
 
             return move;
