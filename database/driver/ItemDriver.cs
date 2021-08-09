@@ -5,11 +5,11 @@ namespace GofRPG_API
 {
     public class ItemDriver : DatabaseDriver
     {
-        private String foodItemQuery = "heal_amount FROM food_item WHERE item_name = \"";
-        private String healingItemQuery = "SELECT heal_percent FROM healing_item WHERE item_name = \"";
-        private String medicalItemQuery = "SELECT status_cure, heal_amount FROM stat_changing_item WHERE item_name = \"";
-        private String priorityItemQuery = "SELECT priority_percentage FROM priority_item  WHERE item_name = \"";
-        private String statChangingItemQuery = "SELECT stat_one, stat_two, is_stat_one_boosted, is_stat_two_boosted, stat_one_percentage, stat_two_percentage FROM stat_changing_item WHERE item_name = \"";
+        private String _foodItemQuery = "heal_amount FROM food_item WHERE item_name = \"";
+        private String _healingItemQuery = "SELECT heal_percent FROM healing_item WHERE item_name = \"";
+        private String _medicalItemQuery = "SELECT status_cure, heal_amount FROM stat_changing_item WHERE item_name = \"";
+        private String _priorityItemQuery = "SELECT priority_percentage FROM priority_item  WHERE item_name = \"";
+        private String _statChangingItemQuery = "SELECT stat_one, stat_two, is_stat_one_boosted, is_stat_two_boosted, stat_one_percentage, stat_two_percentage FROM stat_changing_item WHERE item_name = \"";
 
         public Item GetItem(String name)
         {
@@ -49,7 +49,7 @@ namespace GofRPG_API
                 break;
                 
                 case "FOOD":
-                SqlQuery = foodItemQuery + name + "\"";
+                SqlQuery = _foodItemQuery + name + "\"";
                 MySqlCommand = new MySqlCommand(SqlQuery, MySqlConnection);
                 MySqlDataReader = MySqlCommand.ExecuteReader();
                 if(MySqlDataReader.Read())
@@ -60,7 +60,7 @@ namespace GofRPG_API
                 break;
 
                 case "HEALING":
-                SqlQuery = healingItemQuery + name + "\"";
+                SqlQuery = _healingItemQuery + name + "\"";
                 MySqlCommand = new MySqlCommand(SqlQuery, MySqlConnection);
                 MySqlDataReader = MySqlCommand.ExecuteReader();
                 if(MySqlDataReader.Read())
@@ -71,7 +71,7 @@ namespace GofRPG_API
                 break;
 
                 case "MEDICAL":
-                SqlQuery = medicalItemQuery + name + "\"";
+                SqlQuery = _medicalItemQuery + name + "\"";
                 MySqlCommand = new MySqlCommand(SqlQuery, MySqlConnection);
                 MySqlDataReader = MySqlCommand.ExecuteReader();
                 if(MySqlDataReader.Read())
@@ -82,7 +82,7 @@ namespace GofRPG_API
                 break;
 
                 case "PRIORITY":
-                SqlQuery = priorityItemQuery + name + "\"";
+                SqlQuery = _priorityItemQuery + name + "\"";
                 MySqlCommand = new MySqlCommand(SqlQuery, MySqlConnection);
                 MySqlDataReader = MySqlCommand.ExecuteReader();
                 if(MySqlDataReader.Read())
@@ -93,7 +93,7 @@ namespace GofRPG_API
                 break;
 
                 case "STAT CHANGING":
-                SqlQuery = statChangingItemQuery + name + "\"";
+                SqlQuery = _statChangingItemQuery + name + "\"";
                 MySqlCommand = new MySqlCommand(SqlQuery, MySqlConnection);
                 MySqlDataReader = MySqlCommand.ExecuteReader();
                 if(MySqlDataReader.Read())
