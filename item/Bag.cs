@@ -6,7 +6,7 @@ namespace GofRPG_API
     public class Bag
     {
         private Dictionary<Item, int> _itemList = new Dictionary<Item, int>();
-        private int _totalItemAmount = 0;
+        public int TotalItemAmount {get; private set;}
 
         public Dictionary<Item, int> ItemList 
         {
@@ -15,15 +15,17 @@ namespace GofRPG_API
                 return _itemList;
             }
         }
-        public int TotalItemAmount
+
+        public void SetTotalItemAmount()
         {
-            get
+            int numOfItems = 0;
+            foreach(KeyValuePair<Item, int> itemList in ItemList)
             {
-                return _totalItemAmount;
+                numOfItems += itemList.Value;
             }
-            set
+            if(TotalItemAmount != numOfItems)
             {
-                _totalItemAmount = value;
+                TotalItemAmount = numOfItems;
             }
         }
 
