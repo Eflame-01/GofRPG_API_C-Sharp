@@ -15,32 +15,33 @@ namespace GofRPG_API
         {
             StatName = "HIT POINTS";
             BoostPercent = 0.05;
-            ReductionPercent = 0.05;
+            ReductionPercent = 0;
         }
         
        public override void BoostStat(Character character)
        {
-            int boostVal = (int) (character.CharacterBaseStat.Hp * BoostPercent);
-            if(boostVal > 0)
-            {
-               character.CharacterBaseStat.Hp += boostVal;
-            }
-            else
-            {
-               character.CharacterBaseStat.Hp += 1;
-            }
+           if(!CanUpdateStat() || BoostPercent <= 0)
+           {
+               return;
+           }
+           int boostVal = Math.Clamp((int) (character.CharacterBaseStat.Hp * BoostPercent), 1, character.CharacterBaseStat.Hp);
+           character.CharacterBaseStat.Hp += boostVal;
+           StatAmount = boostVal * -1; //amount to decrement when reverting the stat.
        }
         public override void ReduceStat(Character character)
         {
-            int boostVal = (int) (character.CharacterBaseStat.Hp * BoostPercent);
-            if(boostVal > 0)
+            if(!CanUpdateStat() || ReductionPercent <= 0)
             {
-               character.CharacterBaseStat.Hp -= boostVal;
+                return;
             }
-            else
-            {
-               character.CharacterBaseStat.Hp -= 1;
-            }
+            int reductionVal = Math.Clamp((int) (character.CharacterBaseStat.Hp * ReductionPercent), 1, character.CharacterBaseStat.Hp - 1);
+            character.CharacterBaseStat.Hp -= reductionVal;
+            StatAmount = reductionVal; //amount to increment when reverting the stat.
+        }
+
+        public override void RevertStat(Character character)
+        {
+            character.CharacterBaseStat.Hp += StatAmount;
         }
     }
 }

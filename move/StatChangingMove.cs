@@ -4,9 +4,9 @@ namespace GofRPG_API
 {
     public class StatChangingMove : SecondaryMove
     {
-        Stat StatBoost {get; set;}
-        Stat StatReduction {get; set;}
-        public StatChangingMove(String name, String description, double accuracy, String target, int level, int energyPoints, int maxEnergyPoints, Stat statBoost, Stat statReduction, bool isSideEffect)
+        Stat StatOne {get; set;}
+        Stat StatTwo {get; set;}
+        public StatChangingMove(String name, String description, double accuracy, String target, int level, int energyPoints, int maxEnergyPoints, Stat statOne, Stat statTwo, bool isSideEffect)
         {
             MoveName = name;
             MoveDescription = description;
@@ -20,38 +20,42 @@ namespace GofRPG_API
             MoveTarget = target;
             MoveEnergyPoints = energyPoints;
             MoveMaxEnergyPoints = maxEnergyPoints;
-            StatBoost = statBoost;
-            StatReduction = statReduction;
+            StatOne = statOne;
+            StatTwo = statTwo;
             IsSideEffect = isSideEffect;
             MoveType = "STAT CHANGING";
         }
         public override void PerformMove(Character user, Character target)
         {
-            if(user == null || target == null || IsSideEffect)
+            if(CanUseMove(user, target) && !IsSideEffect)
             {
-                return;
-            }
-            if(StatBoost != null)
-            {
-                StatBoost.BoostStat(target);
-            }
-            if(StatReduction != null){
-                StatReduction.ReduceStat(target);
+                if(StatOne != null)
+                {
+                    StatOne.BoostStat(target);
+                    StatOne.ReduceStat(target);
+                }
+                if(StatTwo != null)
+                {
+                    StatTwo.BoostStat(target);
+                    StatTwo.ReduceStat(target);
+                }
             }
         }
 
         public override void PerformSideEffect(Character target)
         {
-            if(target == null || !IsSideEffect)
+            if(CanPerformSideEffect( target) && IsSideEffect)
             {
-                return;
-            }
-            if(StatBoost != null)
-            {
-                StatBoost.BoostStat(target);
-            }
-            if(StatReduction != null){
-                StatReduction.ReduceStat(target);
+                if(StatOne != null)
+                {
+                    StatOne.BoostStat(target);
+                    StatOne.ReduceStat(target);
+                }
+                if(StatTwo != null)
+                {
+                    StatTwo.BoostStat(target);
+                    StatTwo.ReduceStat(target);
+                }
             }
         }
     }

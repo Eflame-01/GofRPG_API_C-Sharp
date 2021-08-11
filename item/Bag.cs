@@ -42,10 +42,6 @@ namespace GofRPG_API
             }
             else
             {
-                if(item == null)
-                {
-                    return;
-                }
                 ItemList.Add(item, currentAmount);
             }
 
@@ -58,55 +54,54 @@ namespace GofRPG_API
             {
                 return;
             }
-            if(!ItemList.ContainsKey(item))
+            if(ItemList.ContainsKey(item))
             {
-                return;
-            }
-
-            int currentAmount = ItemList[item];
-            if(amount >= currentAmount)
-            {
-                ItemList.Remove(item);
-                TotalItemAmount -= currentAmount;
-            }
-            else
-            {
-                ItemList[item] = currentAmount - amount;
-                TotalItemAmount -= amount;
+                int currentAmount = ItemList[item];
+                if(amount >= currentAmount)
+                {
+                    ItemList.Remove(item);
+                    TotalItemAmount -= currentAmount;
+                }
+                else
+                {
+                    ItemList[item] -= amount;
+                    TotalItemAmount -= amount;
+                }
             }
         }
 
         public void EquipItemToPlayer(Item item)
         {
-            if(PlayerHasItem() && !ItemExist(item))
+            if(ItemExist(item) && PlayerHasItem())
             {
-                return;
+                UnequipItemFromPlayer();
+                Player player = Player.GetInstance();
+                player.CharacterItem = item;
+                DiscardItemFromBag(item, 1);
             }
-            Player player = Player.GetInstance();
-            player.CharacterItem = item;
-            DiscardItemFromBag(item, 1);
         }
 
         public void UnequipItemFromPlayer()
         {
-            if(!PlayerHasItem())
+            if(PlayerHasItem())
             {
-                return;
+                Player player = Player.GetInstance();
+                Item item = player.CharacterItem;
+                item.StopItemUse(player);
+                player.CharacterItem = null;
+                AddItemToBag(item, 1);
             }
-            Player player = Player.GetInstance();
-            Item item = player.CharacterItem;
-            item.StopItemUse(player);
-            player.CharacterItem = null;
-            AddItemToBag(item, 1);
         }
 
-        public bool PlayerHasItem()
+        private bool PlayerHasItem()
         {
+            //If the character's item is not null, then the player is holding an item
             return Player.GetInstance().CharacterItem != null;
         }
 
         private bool ItemExist(Item item)
         {
+            //The item cannot be null, and the item has to be in the database
             return (item != null && new ItemDriver().GetItem(item.ItemName) != null);
         }
     }

@@ -32,7 +32,11 @@ namespace GofRPG_API
 
     public override void PerformMove(Character user, Character target)
     {
-      target.CharacterBattleStatus.ProtectionStatus = ProtectionStatus.COUNTER;
+      if(CanUseMove(user, target))
+      {
+        //setting the protection status to COUNTER enables the target to reflect physical moves back to any character that attacked them.
+        target.CharacterBattleStatus.ProtectionStatus = ProtectionStatus.COUNTER;
+      }
     }
   }
 }

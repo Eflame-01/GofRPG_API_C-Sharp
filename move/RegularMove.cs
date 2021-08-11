@@ -34,27 +34,19 @@ namespace GofRPG_API
         }
         public override void PerformMove(Character user, Character target)
         {
-            if(user == null || target == null)
+            if(CanUseMove(user, target))
             {
-                return;
+                int damage = CalculateDamage(user, target);
+                HitTarget(damage, target);
             }
-            int damage = CalculateDamage(user, target);
-            HitTarget(damage, target);
         }
         public override void PerformSideEffect(Character target)
         {
-            if(target == null)
+            if(CanPerformSideEffect(target))
             {
-                return;
-            }
-            int recoilDamage = (int) (target.CharacterBaseStat.Hp * RecoilDamagePercent);
-            int hp = target.CharacterBaseStat.Hp - recoilDamage;
-            if(hp < 0)
-            {
-                target.CharacterBaseStat.Hp = 0;
-            }
-            else{
-                target.CharacterBaseStat.Hp = hp;
+                int recoilDamage = (int) (target.CharacterBaseStat.Hp * RecoilDamagePercent);
+                int hp = target.CharacterBaseStat.Hp;
+                target.CharacterBaseStat.Hp = Math.Clamp(hp - recoilDamage, 0, hp);
             }
         }
     }

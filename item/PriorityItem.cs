@@ -12,23 +12,37 @@ namespace GofRPG_API
             ItemID = "PRIORITY";
             ItemLevel = level;
             PriorityPercent = priroityPercent;
+            DiscardAfterUse = false;
         }
         public override void UseItem(Character character)
         {
+            //check if the character is holding the item before granting the user the effects
             if(!CharacterHoldingItem(character))
             {
                 return;
             }
-            base.UseItem(character); // sets ItemInUse to true
-            if(CanGoFirst())
-            {
-                character.CharacterBattleStatus.TurnStatus = TurnStatus.GO_FIRST;
-            }
+
+            //switch ItemInUse flag to true
+            ItemInUse = true;
+
+            //use item
+            MakeUserGoFirst(character);
+
+            //TODO: item will not be discared after use because DiscardAfterUse = false
+            DiscardItemAfterUse(character);
         }
         private bool CanGoFirst()
         {
             Random rand = new Random();
             return (rand.NextDouble() <= PriorityPercent);
+        }
+
+        private void MakeUserGoFirst(Character character)
+        {
+            if(CanGoFirst())
+            {
+                character.CharacterBattleStatus.TurnStatus = TurnStatus.GO_FIRST;
+            }
         }
     }
 }

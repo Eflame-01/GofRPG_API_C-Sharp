@@ -16,7 +16,12 @@ namespace GofRPG_API
             QuestTitle = title;
             QuestDescription = description;
             IsMajor = isMajor;
-            IsCompleted = isCompleted;
+            IsCompleted = isCompleted; //TODO: should normally be false unless it's a completed quest that was saved.
+        }
+
+        public void CompletedQuest()
+        {
+            IsCompleted = true;
         }
 
     }

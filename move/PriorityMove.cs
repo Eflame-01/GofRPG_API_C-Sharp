@@ -37,20 +37,20 @@ namespace GofRPG_API
 
         public override void PerformMove(Character user, Character target)
         {
-            if(user == null || target == null)
+            if(CanUseMove(user, target))
             {
-                return;
-            }
-            int damage = CalculateDamage(user, target);
-            HitTarget(damage, target);
-            if(TargetFlinched())
-            {
-                target.CharacterBattleStatus.TurnStatus = TurnStatus.CANNOT_MOVE;
-                FlinchProbability *= SuccessionRate;
+                int damage = CalculateDamage(user, target);
+                HitTarget(damage, target);
+                if(TargetFlinched())
+                {
+                    target.CharacterBattleStatus.TurnStatus = TurnStatus.CANNOT_MOVE;
+                    FlinchProbability *= SuccessionRate;
+                }
             }
         }
         public override void ResetMove()
         {
+            base.ResetMove();
             FlinchProbability = OriginalFlinchProbability;
         }
         private bool TargetFlinched()

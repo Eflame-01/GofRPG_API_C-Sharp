@@ -12,31 +12,39 @@ namespace GofRPG_API
             ItemID = "HEALING";
             ItemLevel = level;
             HealPercent = heal;
+            DiscardAfterUse = false;
         }
         public override void UseItem(Character character)
         {
+            //check if the character is holding the item before granting the user the effects
             if(!CharacterHoldingItem(character))
             {
                 return;
             }
-            base.UseItem(character); // sets ItemInUse to true
-            int fullHp = character.CharacterBaseStat.FullHp;
-            int hp = character.CharacterBaseStat.Hp;
-            int healBoost = (int)(fullHp * HealPercent);
-            if(healBoost <= 0)
-            {
-                healBoost = 1;
-            }
-            hp += healBoost;
 
-            if(hp >= fullHp)
-            {
-                character.CharacterBaseStat.Hp = fullHp;
-            }
-            else
-            {
-                character.CharacterBaseStat.Hp = hp;
-            }
+            //switch ItemInUse flag to true
+            ItemInUse = true;
+
+            //use item
+            SetNewHp(character);
+
+            //TODO: item would not be discarded since DiscardAfterUse is false. Decide if you wish to keep it.
+            DiscardItemAfterUse(character);
+        }
+
+        private int GetHealBoost(Character character)
+        {
+            int fullHp = character.CharacterBaseStat.FullHp;
+            return  Math.Clamp((int)(fullHp * HealPercent), 1, fullHp);
+        }
+        private void SetNewHp(Character character)
+        {
+            int healBoost = GetHealBoost(character);
+            int hp = character.CharacterBaseStat.Hp;
+            int fullHp = character.CharacterBaseStat.FullHp + 1;
+            int newHp =  Math.Clamp(hp + healBoost, hp + 1, fullHp);
+
+            character.CharacterBaseStat.Hp = newHp;
         }
     }
 }

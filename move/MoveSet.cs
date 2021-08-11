@@ -40,16 +40,10 @@ namespace GofRPG_API
         {
             for(int i = 0; i < BattleMoves.Length; i++)
             {
-                if(BattleMoves[i] == null)
+                //if the move in the slot is not null, and move name is the same as move.MoveName, then that move is in the battle slot. Return true.
+                if(BattleMoves[i] != null && BattleMoves[i].MoveName.Equals(move.MoveName))
                 {
-                    continue;
-                }
-                else
-                {
-                    if(BattleMoves[i].MoveName.Equals(move.MoveName))
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
             return false;

@@ -9,10 +9,6 @@ namespace GofRPG_API
         private double _majorQuestXP = 2;
         private double _minorQuestXP = 1.5;
         private double _xpMultiplier = 3;
-        
-        private Level()
-        {
-        }
 
         public int GainXPFromBattle(Character enemy)
         {
@@ -48,12 +44,6 @@ namespace GofRPG_API
             return xp;
         }
 
-        public bool CanLevelUp()
-        {
-            Player player = Player.GetInstance();
-            return player.CharacterCurrentXP >= player.CharacterLimitXP;
-        }
-
         public void LevelUpPlayer()
         {
             if(!CanLevelUp())
@@ -65,14 +55,12 @@ namespace GofRPG_API
             player.CharacterCurrentXP -= player.CharacterLimitXP;
             player.CharacterLimitXP = (int) Math.Pow(player.CharacterLevel, _xpMultiplier);
             player.CharacterArchetype.LevelUpPlayerStats();
+        }
 
-            //TODO: dead code. Do not retrieve moves from here, moves should be retrieved after the player has leveled up
-            // List<Move> list = new MoveDriver().GetMoves();
-            // foreach(Move move in list)
-            // {
-            //     player.CharacterMoveSet.AddMoveToBattleSlot(move);
-            //     player.CharacterMoveSet.AddMoveToList(move);
-            // }
+        private bool CanLevelUp()
+        {
+            Player player = Player.GetInstance();
+            return player.CharacterCurrentXP >= player.CharacterLimitXP;
         }
     }
 }

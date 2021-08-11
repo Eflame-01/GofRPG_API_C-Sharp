@@ -27,21 +27,17 @@ namespace GofRPG_API
         }
         public override void PerformMove(Character user, Character target)
         {
-            if(user == null || target == null || IsSideEffect || target.CharacterBattleStatus.StatusCondition != null)
+            if(CanUseMove(user, target) && !IsSideEffect && target.CharacterBattleStatus.StatusCondition == null)
             {
-                return;
+                target.CharacterBattleStatus.StatusCondition = StatusCondition;
             }
-
-            target.CharacterBattleStatus.StatusCondition = StatusCondition;
         }
         public override void PerformSideEffect(Character target)
         {
-            if(target == null || !IsSideEffect || target.CharacterBattleStatus.StatusCondition != null)
+            if(CanPerformSideEffect(target) && IsSideEffect && target.CharacterBattleStatus.StatusCondition != null)
             {
-                return;
+                target.CharacterBattleStatus.StatusCondition = StatusCondition;
             }
-
-            target.CharacterBattleStatus.StatusCondition = StatusCondition;
         }
     }
 }

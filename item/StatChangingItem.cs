@@ -4,140 +4,64 @@ namespace GofRPG_API
 {
     public class StatChangingItem : Item
     {
-        public Stat StatBoost {get; private set;}
-        public Stat StatReduction {get; private set;}
-        public int StatBoostDifference {get; private set;}
-        public int StatReductionDifference {get; private set;}
+        private Stat StatOne {get; set;}
+        private Stat StatTwo {get; set;}
+        private int StatOneDifference {get; set;}
+        private int StatTwoDifference {get; set;}
 
-        public StatChangingItem(String name, String description, int level, Stat statBoost, Stat statReduction)
+        public StatChangingItem(String name, String description, int level, Stat statOne, Stat statTwo)
         {
             ItemName = name;
             ItemDescription = description;
-            ItemID = "STAT CHANGING";
             ItemLevel = level;
-            StatBoost = statBoost;
-            StatReduction = statReduction;
-            StatBoostDifference = 0;
-            StatReductionDifference = 0;
+            ItemID = "STAT_CHANGING";
+            StatOne = statOne;
+            StatTwo = statTwo;
+            DiscardAfterUse = false;
         }
 
         public override void UseItem(Character character)
         {
-            if(!CharacterHoldingItem(character))
+            //check if the character is holding the item before granting the user the effects
+            if(!CharacterHoldingItem(character) || ItemInUse)
             {
                 return;
             }
-            base.UseItem(character); // sets ItemInUse to true
-            int stat1 = GetStat(StatBoost, character);
-            int stat2 = GetStat(StatReduction, character);
-            if(StatBoost != null)
-            {
-                StatBoost.BoostStat(character);
-            }
-            if(StatReduction != null)
-            {
-                StatReduction.ReduceStat(character);
-            }
-            int boostedStat = GetStat(StatBoost, character);
-            int reducedStat = GetStat(StatReduction, character);
-            StatBoostDifference = (stat1 - boostedStat); //becomes negative value to subtract it from the base stat later
-            StatReductionDifference = (stat2 - reducedStat); //becomes positive value to add it to the base stat later
+
+            //switch ItemInUse flag to true
+            ItemInUse = true;
+
+            //use item
+            UpdateStats(character);
+
+            //TODO: item will not be discarded because DiscardAfterUSe = false
+            DiscardItemAfterUse(character);
         }
 
         public override void StopItemUse(Character character)
         {
-            if(!CharacterHoldingItem(character) && !ItemInUse)
-            {
-                return;
-            }
-            base.StopItemUse(character); // sets ItemInUse to false
-            RevertStat(StatBoost, character, true);
-            RevertStat(StatReduction, character, false);
-            StatBoostDifference = 0;
-            StatReductionDifference = 0;
             ItemInUse = false;
+            if(StatOne != null)
+            {
+                StatOne.RevertStat(character);
+            }
+            if(StatTwo != null)
+            {
+                StatTwo.RevertStat(character);
+            }
         }
 
-        private int GetStat(Stat stat, Character character)
+        private void UpdateStats(Character character)
         {
-            if(stat == null)
+            if(StatOne != null)
             {
-                return 0;
+                StatOne.BoostStat(character);
+                StatTwo.ReduceStat(character);
             }
-            switch(stat.StatName)
+            if(StatTwo != null)
             {
-                case "ATTACK":
-                return character.CharacterBaseStat.Atk;
-                case "DEFENSE":
-                return character.CharacterBaseStat.Def;
-                case "EVASION":
-                return character.CharacterBaseStat.Eva;
-                case "HIT POINTS":
-                return character.CharacterBaseStat.Hp;
-                case "SPEED":
-                return character.CharacterBaseStat.Spd;
-            }
-            return 0;
-        }
-
-        private void RevertStat(Stat stat, Character character, bool boosted)
-        {
-            if(stat == null)
-            {
-                return;
-            }
-            switch(stat.StatName)
-            {
-                case "ATTACK":
-                if(boosted)
-                {
-                    character.CharacterBaseStat.Atk += StatBoostDifference;
-                }
-                else
-                {
-                    character.CharacterBaseStat.Atk += StatReductionDifference;
-                }
-                break;
-                case "DEFENSE":
-                if(boosted)
-                {
-                    character.CharacterBaseStat.Atk += StatBoostDifference;
-                }
-                else
-                {
-                    character.CharacterBaseStat.Atk += StatReductionDifference;
-                }
-                break;
-                case "EVASION":
-                if(boosted)
-                {
-                    character.CharacterBaseStat.Atk += StatBoostDifference;
-                }
-                else
-                {
-                    character.CharacterBaseStat.Atk += StatReductionDifference;
-                }
-                break;
-                case "HIT POINTS":
-                if(boosted)
-                {
-                    character.CharacterBaseStat.Atk += StatBoostDifference;
-                }
-                else
-                {
-                    character.CharacterBaseStat.Atk += StatReductionDifference;
-                }
-                break;
-                case "SPEED":
-                if(boosted)
-                {
-                    character.CharacterBaseStat.Atk += StatBoostDifference;
-                }
-                else
-                {
-                    character.CharacterBaseStat.Atk += StatReductionDifference;
-                }
-                break;
+                StatTwo.BoostStat(character);
+                StatTwo.ReduceStat(character);
             }
         }
     }

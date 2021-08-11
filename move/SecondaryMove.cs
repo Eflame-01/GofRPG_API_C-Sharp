@@ -7,7 +7,8 @@ namespace GofRPG_API
         public bool IsSideEffect {get; set;}
         public override bool IsPrimaryMove()
         {
-            return false;
+            //TODO: if its not a side effect, return true, if it is, return false
+            return !IsSideEffect;
         }
         public override void ResetMove()
         {

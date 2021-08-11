@@ -37,5 +37,33 @@ namespace GofRPG_API
             double probabilityMoveMissed = 1.0 - SecondaryMoveAccuracy;
             return (rand.NextDouble() <= probabilityMoveMissed);
         }
+
+        protected Boolean CanUseMove(Character user, Character target)
+        {
+            //if the user or target do no exist, the move cannot be done
+            if(user == null || target == null)
+            {
+                return false;
+            }
+            //if the user or target are unable to fight, the move cannot be done
+            if(user.CharacterBaseStat.Hp <=  0 || target.CharacterBaseStat.Hp == 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        protected Boolean CanPerformSideEffect(Character target)
+        {
+            if(target == null)
+            {
+                return false;
+            }
+            if(target.CharacterBaseStat.Hp <= 0)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

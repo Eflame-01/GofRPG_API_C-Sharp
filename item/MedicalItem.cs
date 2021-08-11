@@ -15,53 +15,48 @@ namespace GofRPG_API
             ItemLevel = level;
             HealAmount = healAmount;
             StatusCure = statusCure;
+            DiscardAfterUse = true;
         }
 
         public override void UseItem(Character character)
         {
+            //check if the character is holding the item before granting the user the effects
             if(!CharacterHoldingItem(character))
             {
                 return;
             }
-            base.UseItem(character); // sets ItemInUse to true
-            int newHp = GetHealAmount(character);
-            character.CharacterBaseStat.Hp = newHp;
 
+            //switch ItemInUse flag to true
+            ItemInUse = true;
+
+            //use item
+            SetNewHp(character);
             CureStatusCondition(character);
+
+            //discard item
+            DiscardItemAfterUse(character);
         }
 
-        private int GetHealAmount(Character character)
+        private void SetNewHp(Character character)
         {
-            int fullHp = character.CharacterBaseStat.FullHp;
+            int fullHp = character.CharacterBaseStat.FullHp + 1;
             int hp = character.CharacterBaseStat.Hp;
             int newHp = 0;
-            if(HealAmount == -1)
+            if(HealAmount == -1 && hp == 0)
             {
-                int healAmount = (int) (fullHp * 0.5);
-                if(healAmount <= 0)
-                {
-                    healAmount = 1;
-                }
-                newHp = healAmount;
+                //set hp to half the player's full hp
+                newHp = Math.Clamp((int) (fullHp * 0.05), 1, fullHp);
             }
-            else if(HealAmount == -2)
+            else if(HealAmount == -2 && hp == 0)
             {
-                if(hp > 0)
-                {
-                    return 0;
-                }
-                int healAmount = fullHp;
-                newHp = healAmount;
+                //set hp to player's full hp
+                newHp = fullHp;
             }
             else
             {
-                newHp += HealAmount;
+                newHp = Math.Clamp(hp + HealAmount, hp, fullHp);
             }
-            if(newHp >= fullHp)
-            {
-                newHp = fullHp;
-            }
-            return newHp;
+            character.CharacterBaseStat.Hp = newHp;
         }
 
         private void CureStatusCondition(Character character)

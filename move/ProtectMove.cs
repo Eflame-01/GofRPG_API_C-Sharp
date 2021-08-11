@@ -38,12 +38,11 @@ namespace GofRPG_API
         }
         public override void PerformMove(Character user, Character target)
         {
-            if(user == null || target == null)
+            if(CanUseMove(user, target))
             {
-                return;
+                target.CharacterBattleStatus.ProtectionStatus = ProtectMoveType;
+                PrimaryMoveAccuracy *= SuccessionRate;
             }
-            target.CharacterBattleStatus.ProtectionStatus = ProtectMoveType;
-            PrimaryMoveAccuracy *= SuccessionRate;
         }
         public override void ResetMove()
         {
