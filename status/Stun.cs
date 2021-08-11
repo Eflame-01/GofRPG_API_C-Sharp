@@ -4,73 +4,65 @@ namespace GofRPG_API
 {
     public class Stun : StatusCondition
     {
-        public String StatusName
-        {
-            get
-            {
-                return "STUN";
-            }
-        }
-        public int StunDuration {get; set;}
-        public double StunProbability {get; set;}
+        public int StunDuration {get; private set;}
+        public double StunProbability {get; private set;}
+        private int _tempStunDuration = 0;
+        private Stat _speedStat = new Speed(0, 0.05);
+        private Boolean _implementedSpeedDefbuff = false;
 
         public Stun(int duration, double probability)
         {
-            StunDuration = SetStunDuration(duration);
-            StunProbability = SetStunProbability(probability);
+            StunDuration = Math.Clamp(duration, 3, 10);
+            StunProbability = Math.Clamp(probability, 0.25, 0.75);
+            _tempStunDuration = StunDuration;
         }
         public Stun()
         {
             StunDuration = 3;
             StunProbability = 0.25;
+            _tempStunDuration = 3;
         }
 
         public String GetStatusConditionName()
         {
-            return StatusName;
+            return "STUN";
         }
         public void ImplementStatusCondition(Character character)
         {
-            if(character.CharacterBattleStatus.StatusCondition.Equals(this) || StunDuration > 0)
+            if(character.CharacterBattleStatus.StatusCondition.Equals(this) && _tempStunDuration > 0)
             {
-                Random rand = new Random();
-                if(rand.NextDouble() <= StunProbability)
+                if(_implementedSpeedDefbuff)
+                {
+                    ImplementSpeedBuff(character);
+                }
+                if(CharacterIsStunned())
                 {
                     character.CharacterBattleStatus.TurnStatus = TurnStatus.CANNOT_MOVE;
                 }
-                StunDuration -= 1;
-                if(StunDuration <= 0)
+                if(--_tempStunDuration <= 0)
                 {
                     RemoveStatusCondition(character);
                 }
-            }
+            } 
         }
         public void RemoveStatusCondition(Character character)
         {
             if(character.CharacterBattleStatus.StatusCondition.Equals(this))
             {
                 character.CharacterBattleStatus.StatusCondition = null;
+                _speedStat.RevertStat(character);
+                _tempStunDuration = StunDuration;
             }
         }
-        private int SetStunDuration(int duration)
+        private Boolean CharacterIsStunned()
         {
-            if(duration < 3){
-                duration = 3;
-            }
-            else if(duration > 10){
-                duration = 10;
-            }
-            return duration;
+            Random rand = new Random();
+            return rand.NextDouble() <= StunProbability;
         }
-        private double SetStunProbability(double probability)
+        private void ImplementSpeedBuff(Character character)
         {
-            if(probability < 0.25){
-                probability = 0.25;
-            }
-            else if(probability > 0.75){
-                probability = 0.75;
-            }
-            return probability;
+            _speedStat.ReduceStat(character);
+            _implementedSpeedDefbuff = true;
         }
     }
 }
