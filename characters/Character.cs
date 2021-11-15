@@ -22,7 +22,7 @@ namespace GofRPG_API
             {
                 return _characterSex;
             }
-            protected set
+            set
             {
                 if(value.Equals("MALE") || value.Equals("FEMALE") || value.Equals("MALEFE"))
                 {
